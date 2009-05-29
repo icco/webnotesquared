@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <link rel="start"  type="text/html" href="http://www.aypwip.org/webnote/" 
+         title="Webnote - an online tool for taking notes" />
+    <link rel="SHORTCUT ICON" href="webnote_favicon.ico" type="image/x-icon" />
+    <script type="text/javascript" src="webnote"></script>
+    <script type="text/javascript">
+<!--
+function loadinit()
+{
+  debugOn = true;
+  workspace.setName(unescape('webnote%20devel'));
+  workspace.loadedTime = '2005-05-30 18:17:28';
+  adminEmail = '$email';
+  baseURI = '$base';
+  numDates = $numDates;
+  init();
+
+  workspace.createNote( {
+      'id': 'note0',
+      'xPos': '37',
+      'yPos': '55',
+      'height': '150',
+      'width': '250',
+      'bgcolor': '#ffff30',
+      'zIndex': '1',
+      'text': unescape('test1')
+  }, true);
+  workspace.createNote( {
+      'id': 'note1',
+      'xPos': '37',
+      'yPos': '242',
+      'height': '150',
+      'width': '250',
+      'bgcolor': '#ffff30',
+      'zIndex': '2',
+      'text': unescape('a%20basic%20test%20with%20some%20html%0A%3Cem%3Efoo%3C/em%3E%0A%0A%3Cstrong%3Erar%3C/strong%3E%0A%0A%3Ca%20href%3D%22http%3A//www.google.com%22%3Egoogle%3C/a%3E')
+  }, true);
+  workspace.createNote( {
+      'id': 'note2',
+      'xPos': '342',
+      'yPos': '244',
+      'height': '150',
+      'width': '250',
+      'bgcolor': '#ffff30',
+      'zIndex': '3',
+      'text': unescape('some%20unicode%20characters%0A%0A%u7528%u6700%u7B80%u5355%u7684%u8BDD%u63CF%u8FF0%u5C31%u662F')
+  }, true);
+  workspace.nextNoteNum = 3;
+  workspace.changed = false;
+
+}
+// -->
+    </script>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <link rel="alternate" type="application/rss+xml" title="webnote devel - webnote" href="webnote%252520devel.xml" />
+
+    <title>webnote devel</title>
+</head>
+<body onload='loadinit();' style='background-color: #f0f0f0;'>
+    <div class='toolbar'>
+        <div class='controls'>
+          <img src='images/new.gif' class='controls' onclick="workspace.createNote()" title="new note" alt='new note' />
+          <img src='images/save.gif' class='controlsDisabled' onclick="workspace.save()" title="save workspace" id="saveImg" alt='save workspace' />
+          <img src='images/reload.gif' class='controls' onclick="workspace.loadlist()" title="load previous version" alt='load previous version' />
+          <img src='images/undo.gif' class='controlsDisabled' onclick="workspace.history.undo()" title="nothing to undo" id="undoImg" alt='undo icon' />
+          <img src='images/redo.gif' class='controlsDisabled' onclick="workspace.history.redo()" title="nothing to redo" id="redoImg" alt='redo icon' />
+        </div>
+        <div class='filters'>
+            <input class='filters' style='width: 135px; padding: 1px 2px 1px 2px;' id='textfilter' title='enter a regular expression to filter by' onchange='workspace.filter(this.value)' onkeydown='if(13==event.keyCode){workspace.filter(this.value);}; event.cancelBubble=true;'/>
+            <!-- this button is strictly for looks -->
+            <input class='filters' style='width: 50px;' type='button' value='filter' />
+        </div>
+        <div id='mini' title='you have no notes'>
+        </div>
+        <div id='links'>
+          <a href="webnote%252520devel.xml" title='rss feed of these notes' ><img style='margin: 6px 2px;border:0;width:19px;height:9px;' src='images/minixml.gif' alt='xml' /></a>
+        </div>
+        <div id='wsname'>
+        </div>
+    </div>
+    <div id='db'></div>
+</body>
+</html>

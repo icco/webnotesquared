@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <link rel="SHORTCUT ICON" href="webnote_favicon.ico" type="image/x-icon" />
+    <script type="text/javascript" src="objects"></script>
+    <script type="text/javascript">
+
+var isSaf = (navigator.userAgent.toLowerCase().indexOf('safari') != -1);
+
+function init()
+{
+  document.getElementById('fakeName').focus()
+}
+
+function load()
+{
+  if(isSaf)
+    escape = myescape;
+  var name = escape(escape(document.getElementById('fakeName').value));
+  if (0 == name.length)
+    return;
+  
+  setLocation(name);
+}
+
+// this is the old way
+function setLocation(name) {
+  document.location.href = 'load.py?name=' + name;
+}
+
+/*//This is the mod_rewrite way.
+function setLocation(name) {
+  if(isSaf)
+    escape = myescape;
+  document.location.href = escape(name);
+}
+//*/
+
+
+
+function sample()
+{
+  var name = escape(escape('Sample Workspace'));
+  setLocation(name);
+}
+    </script>
+    <title>Webnote - an online tool for taking notes</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <style type="text/css">
+h2 {
+    margin: 8px 0px 8px 0px;
+    text-align: left;
+}
+h3 {
+    margin: 4px;
+    text-align: center;
+}
+    </style>
+</head>
+
+<body onload='init()'>
+    <div class='tnote' style='margin: 30px 15% 10px 15%;'>
+        
+        <div style='width:180px;float:right;margin:10px -40px 10px 10px;padding:4px;'>
+            <div class='tnote'>
+                <h3>Create or Load a Workspace</h3>
+                <form action='javascript:load()'>
+                <p style='text-align: center;'>
+                    <input id='fakeName' size='14' />
+                    <input type='button' value='load' onclick='load()' />
+                </p>
+                </form>
+                <p style='text-align: left; font-size: 0.8em;'>If you enter a name of a
+                workspace that does not exist, it will automatically be created
+                for you.</p>
+            </div>
+            <div class='tnote' style='margin-top:20px;'>
+                <h3>Explore</h3>
+                <p style='text-align: justify;'>
+                If you want to just see the features of webnote, feel free
+                to explore the sample workspace.</p>
+                <p style='text-align: center'>
+                <input type='button' value='Load Sample' onclick='sample()'/>
+                </p>
+            </div>
+            <div class='tnote' style='margin-top:20px;'>
+                <ul style='margin: 0;padding-left: 15px;'>
+                    <li><a href='FAQ.html'><acronym title='frequently asked questions'>FAQ</acronym></a></li>
+                    <li><a href='hints.html'>hints</a></li>
+                    <li><a href='TODO'>TODO list</a></li>
+                    <li><a href='http://www.aypwip.org/lists/webnote/' title='mailing list web archive'>mailing list</a></li>
+                    <li><a href="mailto:tony@ponderer.org">contact me</a></li>
+                    <li><a href='http://www.aypwip.org/cvs/index.pl/webnote/'>source code</a></li>
+                </ul>
+            </div>
+        </div>
+        <h2>Webnote</h2>
+        <p style='text-align: justify;'>
+            Webnote is a tool for taking notes on your computer.  It allows
+            you to quickly write something down during a meeting, class, or
+            any other time that you have a <span 
+            title='IE 6, Mozilla/Firefox and Safari should work'
+            style='border-bottom: 1px #000 dotted;'>web browser</span>
+            available.
+        </p>
+        <p style='text-align: justify;'>
+            You start by creating a workspace and creating notes in the
+            workspace.  You can save your workspace at any time and return
+            to them from the same computer or any other computer.  You can
+            also share your notes with others by providing the workspace
+            name (or url) to a friend.
+        </p>
+        
+        <h3 style='text-align: left; margin: 0;'>News</h3>
+        <p><span style='font-weight: bold;'>December 18, 2004</span><br />
+            I tried to make Webnote work in Konqueror but failed due to
+            incomplete XmlHttpRequest support.  I also moved some of the
+            mouse handling code around.  You may notice a small speed
+            increase.
+        </p>
+        <p><span style='font-weight: bold;'>November 14, 2004</span><br />
+            If someone edits a workspace while you have it open, you will
+            now get a note that pops up to tell you of the change.  As always,
+            if anything appears to be broken, please email me.
+        </p>
+        <p><span style='font-weight: bold;'>October 9, 2004</span><br />
+            Small improvement with loading previous notes.  I no longer
+            have a Mac for testing so if I've broken loading in Safari,
+            please let me know.
+        </p>
+        <p><span style='font-weight: bold;'>Sept 5, 2004</span><br />
+            Safari should work now.  If I've broken compatibility with
+            Mozilla or IE, please <a href="mailto:tony@ponderer.org">notify
+            me</a>.
+        </p>
+        <p><span style='font-weight: bold;'>Aug 30, 2004</span><br />
+            I went through the code in an attempt to make it standards
+            compliant (valid xhtml and css code).  If I broke something
+            in the process, please tell me.  I'm going to start looking
+            into getting things working in Safari next.
+        </p>
+        <p><span style='font-weight: bold;'>Aug 17, 2004</span><br />
+            Sorry for the downtime earlier today.  This site is hosted by
+            <a href='http://www.servercove.com'>servercove</a> which is located
+            in Florida.  They've been having some power outages since hurricane
+            Charley rolled through.
+        </p>
+        <p><span style='font-weight: bold;'>Aug 9, 2004</span><br />
+            You can access your notes with the shortened URL of
+            http://www.aypwip.org/webnote/name and your rss feed
+            with http://www.aypwip.org/webnote/name.xml. 
+            Unfortunately, special characters (things that show up with %
+            signs in the URL) don't seem to work.  If you're a mod_rewrite
+            guru, <a href="mailto:tony@ponderer.org">suggestions</a> on how to
+            fix that would be appreciated.
+        </p>
+        <p>
+            I also created a <a href="http://www.aypwip.org/lists/webnote/">mailing list</a>
+            that can be used for questions, feature requests, or general discussion of
+            webnotes (e.g., what you use webnote for).
+        </p>
+    </div>
+</body>
+</html>

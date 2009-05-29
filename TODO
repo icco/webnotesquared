@@ -1,0 +1,25 @@
+In no particular order:
+
++ list/checkbox style todo
++ add hooks for easier scripting (e.g., notes that can be hidden, etc) - maybe
+  a developer mode?
++ when holding down a key, display some hint about different mouse actions
+  (e.g., when holding alt, change to a resize icon) change tooltip too
++ link notes together (lines like javascript analog clocks)
++ send to back hotkey (what key?)
++ arrows to move (snap to edges (like evilwm))?
++ quick align (like expose, must have undo)
++ snap to edge
++ per note-sync
++ double click on background makes a new note
++ help system
++ if note is being clipped, some cue to the user that this is the case
++ keyboard (create/delete)
++ drawing/sketching (via canvas)
++ mini-map (like photoshop thumbnail)
++ history playback (slider)
++ print stylesheet
++ move event handlers to document rather than per element
+? should anything happen if a note is off screen
+? undo/redo should save zOrders (may be a bit memory intense to save an
+  ordering array)

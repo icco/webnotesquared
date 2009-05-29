@@ -1,0 +1,49 @@
+The code for webnote is broken up into two files, 
+<a href="overview-objects.js.html">objects.js</a> and
+<a href="overview-webnote.js.html">webnote.js</a>.  objects.js contains
+generic classes like a <a href="Point.html">Point</a> class and a 
+<a href="Color.html">Color</a> class while webnote.js contains the 
+Webnote specific classes.  For the most part, the javascript for Webnote
+is written in an object oriented way.</p>
+
+<p>
+The classes are organized like so:
+<pre>
+<a href="Workspace.html">Workspace</a>
+  |
+  +- "dictionary" of <a href="Note.html">Note</a> objects
+  |
+  +- <a href="History.html">History</a> object
+  |
+  +- <a href="Mouse.html">Mouse</a> object
+</pre>
+</p>
+
+<p>
+There is a single global Workspace called workspace that can be used to
+access any of the other objects and methods.  The class also contains methods
+for global actions such as <a href="Workspace.html#filter">filtering the
+notes</a>, <a href="Workspace.html#save">saving the workspace</a>, or
+<a href="Workspace.html#createNote">creating new notes</a>.
+</p>
+
+<p>
+Each note contains two parts: the HTML that makes up the note and a <a
+href="Note.html">Note</a> object in memory.  Most changes to the HTML can be
+done via the wrapper methods provided in the Note class.  For example,
+note1.<a href="Note.html#setText">setText</a>("hello world") would set the
+text of note1.
+</p>
+
+<p>
+<a href="History.html">History</a> is used to maintain the undo and redo
+stack.  The <a href="History.html#add">add</a> method is used to add an event
+to the undo stack.
+</p>
+
+<p>
+<a href="Mouse.html">Mouse</a> is used to handle events that span time.  For
+example, <a href="SelectedObjectDrag.html">dragging a note</a> or 
+<a href="SelectedObjectResize.html">resizing a note</a> are operations that
+use Mouse.
+</p>

@@ -1,0 +1,2047 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Frameset//EN""http://www.w3.org/TR/REC-html40/frameset.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+Webnote Overview
+</TITLE>
+<LINK REL ="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT>
+function asd()
+{
+parent.document.title=" Overview";
+}
+</SCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="asd();">
+
+<!-- ========== START OF NAVBAR ========== -->
+<A NAME="navbar_top"><!-- --></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3">
+  <TR ALIGN="center" VALIGN="top">
+  
+  
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-summary.html"><FONT CLASS="NavBarFont1"><b>Overview</b></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev">	&nbsp;<FONT CLASS="NavBarFont1Rev"><b>File</b></FONT>&nbsp;</TD>
+  
+
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"> 	<FONT CLASS="NavBarFont1">Class</FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-tree.html"><FONT CLASS="NavBarFont1"><b>Tree</b></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="index-all.html"--><FONT CLASS="NavBarFont1"><b>Index</b></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="help-doc.html"><FONT CLASS="NavBarFont1"><b>Help</b></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD BGCOLOR="#EEEEFF" ALIGN="right" VALIGN="top">
+<EM>
+<b>Webnote</b></EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;PREV&nbsp;
+&nbsp;NEXT</FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="index.html" TARGET="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="overview-summary.html" TARGET="_top"><B>NO FRAMES</B></A>
+&nbsp;&nbsp;
+<SCRIPT>
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="allclasses-noframe.html" TARGET=""><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+<A HREF="allclasses-noframe.html" TARGET=""><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+</TABLE>
+<!-- =========== END OF NAVBAR =========== -->
+
+<HR>
+<CENTER>
+
+   <H2>webnote.js</H2>
+
+</CENTER>
+<table>
+	<tr>
+		<td valign="top">
+                        
+                            
+                        
+			
+			<h4>Summary</h4>
+			<p>
+                        
+                           The Webnote specific classes.<br /><br />   The two main classes are <a href="workspace.html#">workspace</a> and <a href="Note.html#">Note</a>.   <a href="workspace.html#">workspace</a> represents the workspace as a whole.  It contains  refernces to all the notes and methods for operations such as saving  the notes or undo-ing/redo-ing an action.<BR/><BR/>
+                           
+			</p>
+		</td>
+	</tr>
+</table>
+
+<HR>
+
+
+
+
+<!-- START SOURCECODE -->
+<pre class="sourceview">
+<span class="comment">/**
+ * <span class="attrib">@fileoverview</span> The Webnote specific classes.&lt;br /&gt;&lt;br /&gt;
+ *
+ * The two main classes are &lt;a href="workspace.html#"&gt;workspace&lt;/a&gt; and &lt;a href="Note.html#"&gt;Note&lt;/a&gt;.
+ *
+ * &lt;a href="workspace.html#"&gt;workspace&lt;/a&gt; represents the workspace as a whole.  It contains
+ * refernces to all the notes and methods for operations such as saving
+ * the notes or undo-ing/redo-ing an action.
+ */</span>
+<span class="comment">
+// global variables</span>
+<span class="comment">// user options</span>
+var debugOn = 1;
+var notePadding = 5;
+var noteBorder = 3;
+var noteBorderColor = <span class="literal">'#000'</span>;
+var miniWidth = 51;
+var exposeSize = <span class="literal">"70"</span>;
+var adminEmail = <span class="literal">'tony at ponderer dot org'</span>;
+var baseURI = <span class="literal">'http://www.aypwip.org/webnote/'</span>;
+var colorMap = {
+  <span class="literal">'#ffff30'</span>: <span class="literal">'yellow'</span>,
+  <span class="literal">'#8facff'</span>: <span class="literal">'blue'</span>,
+  <span class="literal">'#7fff70'</span>: <span class="literal">'green'</span>,
+  <span class="literal">'#ff6060'</span>: <span class="literal">'red'</span>,
+  <span class="literal">'#ffb440'</span>: <span class="literal">'orange'</span>,
+  <span class="literal">'#ff6bef'</span>: <span class="literal">'purple'</span>,
+  <span class="literal">'#ffffff'</span>: <span class="literal">'white'</span>,
+  <span class="literal">'#b0b0b0'</span>: <span class="literal">'grey'</span>
+};
+var bgColors = new Array();
+<span class="reserved">for</span> (var c in colorMap)
+{
+  bgColors.push(c);
+}
+<span class="comment">
+// include other file(s)</span>
+document.write(<span class="literal">'&lt;script type="text/javascript" src="objects"&gt;&lt;/script&gt;'</span>);
+<span class="comment">
+// other global variables, you shouldn't change these</span>
+var isIE = (document.all) ? true : false;
+var isSaf = (navigator.userAgent.toLowerCase().indexOf(<span class="literal">'safari'</span>) != -1);
+
+
+<span class="comment">/**
+ * Create a new note object.  You shouldn't need to call this directly, use
+ * &lt;a href="workspace.html#createNote"&gt;workspace.createNote()&lt;/a&gt; instead.
+ * <span class="attrib">@class</span> A class that acts as a wrapper to the actual html div that is a
+ * note.  Rather than operating directly on the html object, use this
+ * class instead.
+ * TODO: attach these methods directly to the html objects.
+ * <span class="attrib">@param</span> {HtmlElement} note a reference to the actual note or a string that
+ * is the id of the note
+ * <span class="attrib">@param</span> {workspace} p a reference to the parent workspace
+ * <span class="attrib">@param</span> {string} text the text of the note
+ */</span>
+<span class="reserved">function</span> Note(note, p, text)
+{
+<span class="comment">  // constructor code</span>
+  <span class="reserved">if</span> (typeof note == <span class="literal">'string'</span>)
+    note = get(note);
+  <span class="reserved">if</span> (!text) text = <span class="literal">''</span>
+<span class="comment">  // </span>
+  <span class="comment">/**
+   * TODO: fix references to workspace with this.parent
+   * <span class="attrib">@type</span> workspace
+   */</span>
+  <span class="reserved">this</span>.parent = p;
+  <span class="comment">/**
+   * Whether or not is it possible to click on a note and select it
+   * <span class="attrib">@type</span> boolean
+   */</span>
+  <span class="reserved">this</span>.selectable = true;
+  <span class="comment">/**
+   * Whether or not we can double click and edit a note
+   * <span class="attrib">@type</span> boolean
+   */</span>
+  <span class="reserved">this</span>.editable = true;
+  <span class="comment">/**
+   * The html id of the note
+   * <span class="attrib">@type</span> string
+   */</span>
+  <span class="reserved">this</span>.id = note.id;
+  <span class="comment">/**
+   * The height and width of the note
+   * <span class="attrib">@type</span> Point
+   */</span>
+  <span class="reserved">this</span>.size = new Point(parseInt(note.style.width), parseInt(note.style.height));
+<span class="comment">
+  // create the mini note dom object</span>
+  var size = 6;
+  var dotElt = document.createElement(<span class="literal">'div'</span>);
+  dotElt.setAttribute(<span class="literal">'id'</span>, <span class="literal">'m'</span> + <span class="reserved">this</span>.id);
+  dotElt.setAttribute(<span class="literal">'onmousedown'</span>, <span class="literal">'workspace.notes.'</span> + <span class="reserved">this</span>.id + <span class="literal">'.miniMouseDown(event);'</span>);
+  get(<span class="literal">'mini'</span>).appendChild(dotElt);
+
+  var dot = get(<span class="literal">'m'</span> + <span class="reserved">this</span>.id);
+  dot.style.width = size + <span class="literal">'px'</span>;
+  dot.style.height = (size+1) + <span class="literal">'px'</span>;
+  dot.style.border = <span class="literal">'1px #000 solid'</span>;
+  dot.style.backgroundColor = note.style.backgroundColor;
+  dot.style.margin = <span class="literal">'1px 1px 2px 1px'</span>;
+  dot.style.styleFloat = <span class="literal">'left'</span>;
+  dot.style.fontSize = <span class="literal">'1px'</span>;
+  dot.style.cssFloat = <span class="literal">'left'</span>;
+
+  <span class="reserved">if</span> (isIE)
+  {
+    var self = <span class="reserved">this</span>;
+    dotElt.onmousedown = <span class="reserved">function</span>() {
+      self.miniMouseDown(event);
+    };
+  }
+<span class="comment">  
+  // call methods</span>
+  <span class="reserved">this</span>.setColor(note.style.backgroundColor, true);
+  <span class="reserved">this</span>.setText(text);
+  <span class="reserved">this</span>.updateSize();
+}
+<span class="comment">/**
+ * User clicked on a note.
+ */</span>
+Note.<span class="reserved">prototype</span>.mouseDown = <span class="reserved">function</span>(ev)
+{
+  <span class="reserved">if</span> (!<span class="reserved">this</span>.selectable)
+    <span class="reserved">return</span> true;
+<span class="comment">
+  // alt + rt click == send to back</span>
+<span class="comment">  // 2 is rt click in both IE and Mozilla</span>
+  <span class="reserved">if</span> (ev.altKey &amp;&amp; 2 == ev.button)
+  {
+    <span class="reserved">this</span>.sendToBack();
+    <span class="reserved">return</span> true;
+  }
+
+  var lbutton = false;
+  <span class="reserved">if</span> (isIE || isSaf) // IE and Safari<span class="literal">'s button mapping (1, 2, 4)
+    lbutton = 1 == ev.button;
+  else // mozilla and w3c'</span>s button mapping (0, 1, 2)
+    lbutton = 0 == ev.button;
+<span class="comment">
+  // only the left button should have an event</span>
+<span class="comment">  // likewise we can disable actions by using meta or ctrl+alt</span>
+  <span class="reserved">if</span> (!lbutton || ev.metaKey || (ev.ctrlKey &amp;&amp; ev.altKey))
+    <span class="reserved">return</span> true;
+  
+  ev.cancelBubble = true;
+  <span class="reserved">this</span>.parent.mouse.select(<span class="reserved">this</span>, ev);
+  <span class="reserved">return</span> true;
+}
+<span class="comment">/**
+ * User clicked on one of the mini notes at the top of the page.
+ */</span>
+Note.<span class="reserved">prototype</span>.miniMouseDown = <span class="reserved">function</span>(ev)
+{
+  <span class="reserved">if</span> (ev.ctrlKey) // bring all notes of the same color to the front
+  {
+    <span class="reserved">for</span> (var n in <span class="reserved">this</span>.parent.notes)
+    {
+      var note = <span class="reserved">this</span>.parent.notes[n];
+      <span class="reserved">if</span> (note != <span class="reserved">this</span> &amp;&amp; note.bgColor.toString() == <span class="reserved">this</span>.bgColor.toString())
+        note.select();
+    }
+  }
+  <span class="reserved">else</span> <span class="reserved">if</span> (ev.shiftKey)
+  {
+    workspace.filter(<span class="literal">'color:'</span> + colorMap[<span class="reserved">this</span>.bgColor.toString()]);
+  }
+  <span class="reserved">this</span>.select();
+<span class="comment">    
+  // bring it back if it's off screen</span>
+  var size = <span class="reserved">this</span>.getCorrectedSize();
+  var pos = <span class="reserved">this</span>.getPosition();
+  var elt = get(<span class="reserved">this</span>.id);
+  <span class="reserved">if</span> (size.x + pos.x &lt; 5)
+    elt.style.left = <span class="literal">"1px"</span>;
+  <span class="reserved">if</span> (size.y + pos.y &lt; 5)
+    elt.style.top = <span class="literal">"1px"</span>;
+}
+<span class="comment">/**
+ * User deselected a note (stopped dragging).
+ */</span>
+Note.<span class="reserved">prototype</span>.mouseUp = <span class="reserved">function</span>() { <span class="reserved">this</span>.parent.mouse.deselect(); }
+<span class="comment">/**
+ * Note keyboard events.
+ */</span>
+Note.<span class="reserved">prototype</span>.keyDown = <span class="reserved">function</span>(ev)
+{
+<span class="comment">  // don't do anything if we're editing the note</span>
+  <span class="reserved">if</span> (<span class="reserved">this</span>.parent.edit == <span class="reserved">this</span>)
+    <span class="reserved">return</span>;
+<span class="comment">  
+  // set the color based on number</span>
+  var idx = parseInt(String.fromCharCode(ev.keyCode)) - 1;
+  <span class="reserved">if</span> (idx &gt;= 0 &amp;&amp; idx &lt; bgColors.length)
+    <span class="reserved">this</span>.setColor(bgColors[idx]);
+}
+<span class="comment">/**
+ * Moving the mouse while over a note (changes cursor).
+ */</span>
+Note.<span class="reserved">prototype</span>.mouseMove = <span class="reserved">function</span>(ev)
+{
+  var elt = get(<span class="reserved">this</span>.id);
+  <span class="reserved">if</span> (!<span class="reserved">this</span>.selectable)
+  {
+    elt.style.cursor = <span class="literal">'auto'</span>;
+    <span class="reserved">return</span>;
+  }
+  <span class="reserved">if</span> (<span class="reserved">this</span>.parent.mouse.selObj)
+    <span class="reserved">return</span>;
+  <span class="reserved">if</span> (isIE)
+  {
+    ev.layerX = ev.offsetX + noteBorder;
+    ev.layerY = ev.offsetY + noteBorder;
+  }
+  var top = false;
+  var left = false;
+  var right = false;
+  var bottom = false;
+  var size = <span class="reserved">this</span>.getCorrectedSize();
+  
+  <span class="reserved">if</span> (ev.layerX &lt;= noteBorder)
+    left = true;
+  <span class="reserved">if</span> (size.x - ev.layerX &lt;= noteBorder)
+    right = true;
+  <span class="reserved">if</span> (ev.layerY &lt;= noteBorder)
+    top = true;
+  <span class="reserved">if</span> (size.y - ev.layerY &lt;= noteBorder)
+    bottom = true;
+  <span class="reserved">if</span> ( (top &amp;&amp; left) || (bottom &amp;&amp; right) )
+    elt.style.cursor = <span class="literal">'nw-resize'</span>;
+  <span class="reserved">else</span> <span class="reserved">if</span> ( (top &amp;&amp; right) || (bottom &amp;&amp; left) )
+    elt.style.cursor = <span class="literal">'ne-resize'</span>;
+  <span class="reserved">else</span> <span class="reserved">if</span> (top || bottom)
+    elt.style.cursor = <span class="literal">'n-resize'</span>;
+  <span class="reserved">else</span> <span class="reserved">if</span> (left || right)
+    elt.style.cursor = <span class="literal">'e-resize'</span>;
+  <span class="reserved">else</span>
+    elt.style.cursor = <span class="literal">'move'</span>;
+  <span class="reserved">this</span>.parent.mouse.notePosRel[<span class="literal">'top'</span>] = top;
+  <span class="reserved">this</span>.parent.mouse.notePosRel[<span class="literal">'bottom'</span>] = bottom;
+  <span class="reserved">this</span>.parent.mouse.notePosRel[<span class="literal">'left'</span>] = left;
+  <span class="reserved">this</span>.parent.mouse.notePosRel[<span class="literal">'right'</span>] = right;
+}
+<span class="comment">/**
+ * Mouse moves over a note (darken the background color).
+ */</span>
+Note.<span class="reserved">prototype</span>.mouseOver = <span class="reserved">function</span>()
+{
+  var elt = get(<span class="reserved">this</span>.id);
+  elt.style.background = (new Color(<span class="reserved">this</span>.bgColor.toString())).hsvadj(0, 0, -0.1);
+  <span class="reserved">this</span>.parent.mouse.noteOver = <span class="reserved">this</span>;
+}
+<span class="comment">/**
+ * Mouse leaves a note (restore original background color).
+ */</span>
+Note.<span class="reserved">prototype</span>.mouseOut = <span class="reserved">function</span>()
+{
+  var elt = get(<span class="reserved">this</span>.id);
+  elt.style.backgroundColor = <span class="reserved">this</span>.bgColor.toString();
+  delete <span class="reserved">this</span>.parent.mouse.noteOver;
+}
+<span class="comment">/**
+ * Double-click event on a note (try to toggle edit mode).
+ */</span>
+Note.<span class="reserved">prototype</span>.mouseDblClick = <span class="reserved">function</span>()
+{
+  <span class="reserved">if</span> (!<span class="reserved">this</span>.editable)
+    <span class="reserved">return</span>;
+  
+  <span class="reserved">if</span> (<span class="reserved">this</span>.parent.edit == <span class="reserved">this</span>)
+  {
+    <span class="reserved">this</span>.parent.editOff();
+    <span class="reserved">return</span>;
+  }
+  <span class="reserved">this</span>.parent.editOff();
+  var pSize = <span class="reserved">this</span>.getCorrectedSize();
+  pSize.x -= 2 * (noteBorder + notePadding + 1);
+  pSize.y -= 2 * (noteBorder + notePadding + 1) + 16;
+  var html = <span class="literal">"&lt;div style='text-align:right;margin: 0 2px 1px 0;'&gt;"</span>
+<span class="comment">
+  // color swatches here</span>
+  <span class="reserved">for</span> (var c in bgColors)
+  {
+    html += <span class="literal">"&lt;div style='width: 12px;height:12px;font-size:1px;float:left;background: "</span>
+          + bgColors[c] + <span class="literal">";border: 1px #000 solid; margin:0 1px 1px 0;cursor:auto;' "</span>
+          + <span class="literal">"onmousedown='workspace.notes."</span> + <span class="reserved">this</span>.id
+          + <span class="literal">".setColor(\"</span><span class="literal">" + bgColors[c] + "</span>\<span class="literal">");event.cancelBubble=true;' title='press "</span>
+          + (parseInt(c)+1) + <span class="literal">" when not in edit mode change to this color'&gt;&lt;/div&gt;"</span>;
+  }
+  
+  html += <span class="literal">"&lt;img onclick='workspace.notes."</span> + <span class="reserved">this</span>.id 
+        + <span class="literal">".destroy(true);' src='images/close.gif' alt='close button'"</span>
+        + <span class="literal">" title='click to destroy note' style='cursor:auto;border:0;height:12px;width:12px;' /&gt;"</span>
+        + <span class="literal">"&lt;/div&gt;&lt;textarea wrap='virtual' id='"</span>
+        + <span class="reserved">this</span>.id + <span class="literal">"text' style='width:"</span> + pSize.x
+        + <span class="literal">"px;height:"</span> + pSize.y + <span class="literal">"px' onmousedown='event.cancelBubble=true;' ondblclick='event.cancelBubble=true;'&gt;"</span>
+        + <span class="reserved">this</span>.text.replace(/&gt;/g, <span class="literal">'&amp;gt;'</span>).replace(/&lt;/g, <span class="literal">'&amp;lt;'</span>) + <span class="literal">'&lt;/textarea&gt;'</span>;
+  var elt = get(<span class="reserved">this</span>.id);
+  elt.innerHTML = html;
+  elt.title = <span class="literal">''</span>;
+  get(<span class="reserved">this</span>.id + <span class="literal">'text'</span>).focus();
+  <span class="reserved">this</span>.parent.edit = <span class="reserved">this</span>;
+}
+<span class="comment">/**
+ * Destroy the note (user clicked on the X).
+ * <span class="attrib">@param</span> {boolean} addToHistory should we add information to the undo
+ * stack?
+ */</span>
+Note.<span class="reserved">prototype</span>.destroy = <span class="reserved">function</span>(addToHistory)
+{
+<span class="comment">  // if it's being edited, turn it off</span>
+  <span class="reserved">if</span> (<span class="reserved">this</span>.parent.edit == <span class="reserved">this</span>)
+    <span class="reserved">this</span>.parent.editOff();
+  
+  var elt = get(<span class="reserved">this</span>.id);
+<span class="comment">  
+  // save undo information</span>
+  <span class="reserved">if</span> (addToHistory)
+  {
+    var pos = <span class="reserved">this</span>.getPosition();
+    var ws = <span class="reserved">this</span>.parent;
+    var f = {
+      title : <span class="literal">'delete note'</span>,
+      noteData : {
+          <span class="literal">'id'</span> : <span class="reserved">this</span>.id,
+          <span class="literal">'xPos'</span> : pos.x,
+          <span class="literal">'yPos'</span> : pos.y,
+          <span class="literal">'height'</span> : <span class="reserved">this</span>.size.y,
+          <span class="literal">'width'</span> : <span class="reserved">this</span>.size.x,
+          <span class="literal">'bgcolor'</span> : <span class="reserved">this</span>.bgColor.toString(),
+          <span class="literal">'zIndex'</span> : elt.style.zIndex,
+          <span class="literal">'text'</span> : <span class="reserved">this</span>.text
+        },
+      undo : <span class="reserved">function</span>()
+      {
+        ws.createNote(<span class="reserved">this</span>.noteData);
+      },
+      redo : <span class="reserved">function</span>()
+      {
+        ws.notes[<span class="reserved">this</span>.noteData.id].destroy(false);
+      }
+    };
+    <span class="reserved">this</span>.parent.history.add(f);
+  }
+<span class="comment">  
+  // now delete the html node</span>
+  elt.parentNode.removeChild(elt);
+<span class="comment">  
+  // delete the mini html node</span>
+  elt = get(<span class="literal">'m'</span> + <span class="reserved">this</span>.id);
+  elt.parentNode.removeChild(elt);
+<span class="comment">
+  // remove it from the array of notes</span>
+  delete <span class="reserved">this</span>.parent.notes[<span class="reserved">this</span>.id];
+  <span class="reserved">this</span>.parent.numNotes--;
+<span class="comment">  
+  // resize the mini box and update the stats</span>
+  <span class="reserved">this</span>.parent.updateMiniBox();
+<span class="comment">  
+  // is the garbage collector smart enough to delete the object now?</span>
+}
+<span class="comment">/**
+ * Get the coordinates of the upper left corner of the note.
+ * <span class="attrib">@type</span> Point
+ */</span>
+Note.<span class="reserved">prototype</span>.getPosition = <span class="reserved">function</span>()
+{
+  var ret = new Point(0, 0);
+  var elt = get(<span class="reserved">this</span>.id);
+  ret = new Point(parseInt(elt.style.left), parseInt(elt.style.top));
+  <span class="reserved">return</span> ret;
+}
+<span class="comment">/**
+ * Get the size of the note according to the dom object (this varies on
+ * browser).
+ * <span class="attrib">@type</span> Point
+ */</span>
+Note.<span class="reserved">prototype</span>.getSize = <span class="reserved">function</span>()
+{
+  <span class="reserved">return</span> new Point(<span class="reserved">this</span>.size.x, <span class="reserved">this</span>.size.y);
+}
+<span class="comment">/**
+ * Get the size of the note including border and padding.
+ * <span class="attrib">@type</span> Point
+ */</span>
+Note.<span class="reserved">prototype</span>.getCorrectedSize = <span class="reserved">function</span>()
+{
+  var ret = <span class="reserved">this</span>.getSize();
+  <span class="reserved">if</span> (!isIE)
+  {
+    ret.x += 2*(noteBorder+notePadding);
+    ret.y += 2*(noteBorder+notePadding);
+  }
+  <span class="reserved">return</span> ret;
+}
+
+<span class="comment">/**
+ * Set the color of a note.
+ * <span class="attrib">@param</span> {string} hex the color in hex
+ * <span class="attrib">@param</span> {boolean} ignoreHistory should we add it to the history?
+ * Different default values makes this inconsistent with &lt;a href="#destroy"&gt;destroy()&lt;/a&gt;
+ */</span>
+Note.<span class="reserved">prototype</span>.setColor = <span class="reserved">function</span>(hex, ignoreHistory)
+{
+  var newColor = new Color(hex);
+
+  <span class="reserved">if</span> (!ignoreHistory)
+  {
+    var f = {
+      title : <span class="literal">'change color'</span>,
+      note : <span class="reserved">this</span>,
+      ucolor : <span class="reserved">this</span>.bgColor,
+      rcolor : newColor,
+      undo : <span class="reserved">function</span>()
+      {
+        <span class="reserved">this</span>.note.setColor(<span class="reserved">this</span>.ucolor.toString(), true);
+      },
+      redo : <span class="reserved">function</span>()
+      {
+        <span class="reserved">this</span>.note.setColor(<span class="reserved">this</span>.rcolor.toString(), true);
+      }
+    }
+    <span class="reserved">this</span>.parent.history.add(f);
+  }
+  
+  <span class="reserved">this</span>.bgColor = newColor;
+
+  var elt = get(<span class="reserved">this</span>.id);
+  <span class="reserved">if</span> (<span class="reserved">this</span>.parent.mouse.noteOver &amp;&amp; <span class="reserved">this</span>.parent.mouse.noteOver == <span class="reserved">this</span>)
+    elt.style.background = (new Color(<span class="reserved">this</span>.bgColor.toString())).hsvadj(0, 0, -0.1);
+  <span class="reserved">else</span>
+    elt.style.background = <span class="reserved">this</span>.bgColor.toString();
+  
+  get(<span class="literal">'m'</span> + <span class="reserved">this</span>.id).style.background = <span class="reserved">this</span>.bgColor;
+}
+<span class="comment">/**
+ * Convert the text of a note to html.  We perform a simple transform of
+ * newlines into &lt;br/&gt; and ! into headings.  Other wiki/textile like
+ * transforms would happen here.
+ * <span class="attrib">@type</span> string
+ */</span>
+Note.<span class="reserved">prototype</span>.getHTML = <span class="reserved">function</span>() // wikification
+{
+  var sCopy = <span class="reserved">this</span>.text.replace(/\n/g,<span class="literal">"&lt;br /&gt;\n"</span>);
+  var lines = sCopy.split(<span class="literal">'\n'</span>);
+  <span class="reserved">for</span> (var i = 0; i &lt; lines.length; i++)
+  {
+    <span class="reserved">if</span> (lines[i].length &gt; 0)
+    {
+<span class="comment">      // handle headings</span>
+      switch(lines[i].charAt(0))
+      {
+        case <span class="literal">'!'</span>: // headings
+          var c = 0;
+          <span class="reserved">while</span> (<span class="literal">'!'</span> == lines[i].charAt(c))
+            c++;
+          lines[i] = lines[i].substring(c);
+          c = Math.min(c, 3); // h3 is the biggest
+          c = 4 - c;
+          lines[i] = <span class="literal">'&lt;h'</span> + c + <span class="literal">'&gt;'</span> + lines[i] + <span class="literal">'&lt;/h'</span> + c + <span class="literal">'&gt;'</span>;
+          break;
+        default:
+<span class="comment">          // lines[i] = lines[i] + '&lt;br /&gt;';</span>
+      }
+    }
+  }
+<span class="comment">  // this is a way to disable text selection, but it's not easy to turn it</span>
+<span class="comment">  // back on</span>
+<span class="comment">  //"&lt;div id='pseudo" + this.id </span>
+<span class="comment">  // + "' unselectable='on' onmousedown='return ev.metaKey || (event.ctrlKey &amp;&amp; event.altKey)'&gt;" </span>
+  <span class="reserved">return</span> lines.join(<span class="literal">''</span>);
+}
+<span class="comment">/**
+ * Generate the xml representing a note (used when we save notes).
+ * <span class="attrib">@type</span> string
+ */</span>
+Note.<span class="reserved">prototype</span>.toXML = <span class="reserved">function</span>()
+{
+  var ret = <span class="literal">"&lt;note noteid='"</span> + <span class="reserved">this</span>.id + <span class="literal">"'"</span>;
+  ret += <span class="literal">" bgcolor='"</span> + <span class="reserved">this</span>.bgColor + <span class="literal">"'"</span>;
+  ret += <span class="literal">" xposition='"</span> + <span class="reserved">this</span>.getPosition().x + <span class="literal">"'"</span>;
+  ret += <span class="literal">" yposition='"</span> + <span class="reserved">this</span>.getPosition().y + <span class="literal">"'"</span>;
+  ret += <span class="literal">" height='"</span> + <span class="reserved">this</span>.getSize().y + <span class="literal">"'"</span>;
+  ret += <span class="literal">" width='"</span> + <span class="reserved">this</span>.getSize().x + <span class="literal">"'"</span>;
+  ret += <span class="literal">" zindex='"</span> + get(<span class="reserved">this</span>.id).style.zIndex + <span class="literal">"'"</span>;
+  ret += <span class="literal">"&gt;\n"</span> + escape(<span class="reserved">this</span>.text) + <span class="literal">"\n"</span>;
+  <span class="reserved">return</span> ret + <span class="literal">"&lt;/note&gt;"</span>
+}
+<span class="comment">/**
+ * Change the text of a note.
+ * <span class="attrib">@param</span> {string} str the text for the note.
+ */</span>
+Note.<span class="reserved">prototype</span>.setText = <span class="reserved">function</span>(str)
+{
+<span class="comment">  // convert characters from 160-255 to html codepoints (this provides</span>
+<span class="comment">  // Safari compatability</span>
+  var chars = new Array();
+  var i;
+  <span class="reserved">for</span> (i = 0; i &lt; str.length; i++)
+  {
+    var c = str.charCodeAt(i);
+    <span class="reserved">if</span> (c &gt;= 160 &amp;&amp; c &lt;= 255)
+      chars.push(<span class="literal">"&amp;#"</span> + c + <span class="literal">";"</span>);
+    <span class="reserved">else</span>
+      chars.push(str.charAt(i));
+  }
+  str = chars.join(<span class="literal">''</span>);
+
+  <span class="reserved">if</span> (str != <span class="reserved">this</span>.text)
+  {
+    <span class="reserved">this</span>.parent.changed = true;
+    <span class="reserved">this</span>.text = str;
+  }
+  var elt = get(<span class="reserved">this</span>.id);
+  elt.innerHTML = <span class="reserved">this</span>.getHTML();
+<span class="comment">
+  // make images undraggable</span>
+  var imgs = elt.getElementsByTagName(<span class="literal">'img'</span>);
+  <span class="reserved">for</span> (i = 0; i &lt; imgs.length; i++)
+  {
+    <span class="reserved">if</span> (isIE)
+      imgs[i].setAttribute(<span class="literal">'unselectable'</span>, <span class="literal">'on'</span>);
+    <span class="reserved">else</span>
+      imgs[i].onmousedown = <span class="reserved">function</span>() { <span class="reserved">return</span> false; };
+  }
+  
+  elt.title = <span class="literal">'double click to edit'</span>;
+  get(<span class="literal">'m'</span> + <span class="reserved">this</span>.id).title = str;
+}
+<span class="comment">/**
+ * We keep track of the size of the note internally; this method updates
+ * that value.
+ */</span>
+Note.<span class="reserved">prototype</span>.updateSize = <span class="reserved">function</span>()
+{
+  var elt = get(<span class="reserved">this</span>.id);
+  <span class="reserved">this</span>.size.x = parseInt(elt.style.width);
+  <span class="reserved">this</span>.size.y = parseInt(elt.style.height);
+}
+<span class="comment">/**
+ * Disable a note (can't be moved or edited).
+ */</span>
+Note.<span class="reserved">prototype</span>.disable = <span class="reserved">function</span>()
+{
+  <span class="reserved">this</span>.selectable = <span class="reserved">this</span>.editable = false;
+  var elt = get(<span class="reserved">this</span>.id);
+  elt.title = <span class="literal">''</span>;
+}
+<span class="comment">/**
+ * Enable a note (can be moved and edited).
+ */</span>
+Note.<span class="reserved">prototype</span>.enable = <span class="reserved">function</span>()
+{
+  <span class="reserved">this</span>.selectable = <span class="reserved">this</span>.editable = true;
+  var elt = get(<span class="reserved">this</span>.id);
+  elt.title = <span class="literal">'double click to edit'</span>;
+}
+<span class="comment">/**
+ * When a note is selected from the mini note toolbar, we bring it to the
+ * front and flash the background.
+ */</span>
+Note.<span class="reserved">prototype</span>.select = <span class="reserved">function</span>()
+{
+  <span class="reserved">this</span>.parent.reZOrder(<span class="reserved">this</span>.id);
+  var self = <span class="reserved">this</span>;
+  var elt = get(<span class="reserved">this</span>.id);
+  elt.style.backgroundColor = (new Color(<span class="reserved">this</span>.bgColor.toString()))
+                                   .hsvadj(0, 0, -0.1);
+<span class="comment">  // make a new layer with the name</span>
+  var d = document.createElement(<span class="literal">'div'</span>);
+  d.innerHTML = <span class="reserved">this</span>.id;
+  d.style.position = <span class="literal">'absolute'</span>;
+  d.style.top = (parseInt(elt.style.top) + 5) + <span class="literal">'px'</span>;
+  d.style.left = (parseInt(elt.style.left) + 5) + <span class="literal">'px'</span>;
+  d.style.zIndex = 1000;
+  d.style.backgroundColor = <span class="literal">'#fff'</span>;
+  d.style.padding = <span class="literal">'4px'</span>;
+  d.style.opacity = 0.8;
+  document.body.appendChild(d);
+  
+  setTimeout(<span class="reserved">function</span>() { 
+    elt.style.backgroundColor = self.bgColor.toString(); 
+    d.parentNode.removeChild(d);
+  }, 500);
+}
+<span class="comment">/**
+ * Send a note to the back of the workspace.
+ */</span>
+Note.<span class="reserved">prototype</span>.sendToBack = <span class="reserved">function</span>()
+{
+  var elt = get(<span class="reserved">this</span>.id);
+  elt.style.zIndex = 0;
+  <span class="reserved">this</span>.parent.reZOrder();
+}
+<span class="comment">/**
+ * Move the note relative to its current position.
+ * <span class="attrib">@param</span> {Point} delta a point object
+ */</span>
+Note.<span class="reserved">prototype</span>.move = <span class="reserved">function</span>(delta) {
+  var newpos = <span class="reserved">this</span>.getPosition().add(delta);
+  var elt = get(<span class="reserved">this</span>.id);
+  elt.style.left = newpos.x + <span class="literal">'px'</span>;
+  elt.style.top = newpos.y + <span class="literal">'px'</span>;
+}
+
+<span class="comment">/**
+ * Determine which note is above which other note.  Used when re-stacking
+ * notes.  Returns -1 if a is below b, +1 if a is above b, and 0 if they
+ * have the same z value.
+ * <span class="attrib">@param</span> {Note} a
+ * <span class="attrib">@param</span> {Note} b
+ * <span class="attrib">@type</span> int
+ */</span>
+<span class="reserved">function</span> cmpNotesZ(a, b)
+{
+  var av = parseInt(get(a.id).style.zIndex);
+  var bv = parseInt(get(b.id).style.zIndex);
+  <span class="reserved">if</span> (av &lt; bv)
+    <span class="reserved">return</span> -1;
+  <span class="reserved">if</span> (av &gt; bv)
+    <span class="reserved">return</span> 1;
+  <span class="reserved">return</span> 0;
+}
+<span class="comment">
+//</span>
+<span class="comment">// Mouse objects</span>
+<span class="comment">//</span>
+
+<span class="comment">/**
+ * <span class="attrib">@class</span> A class that tracks the mouse position and handles mouse events.
+ * <span class="attrib">@constructor</span>
+ */</span>
+var Mouse =
+{
+  <span class="comment">/**
+   * When resizing a note, this determines which edges need to be moved and
+   * which edges remain fixed.  It is a dictionary from string -&gt; boolean
+   * where the string is either 'top, 'right', 'bottom' or 'left' and true
+   * means the edge is moving.
+   * <span class="attrib">@see</span> Note#mouseMove
+   * <span class="attrib">@type</span> dictionary
+   */</span>
+  notePosRel : {},
+  <span class="comment">/**
+   * The current location of the mouse.  We initialize it to a dummy value
+   * because object.js probably hasn't loaded yet (and Point is undefined).
+   * It actually gets set in &lt;a href="GLOBALS.html#init"&gt;GLOBALS.init()&lt;/a&gt;
+   * <span class="attrib">@type</span> Point
+   */</span>
+  curPos : 0,
+
+  <span class="comment">/**
+   * Update the mouse position and resize/move notes if necessary.
+   * <span class="attrib">@param</span> {int} x x position
+   * <span class="attrib">@param</span> {int} y y position
+   */</span>
+  update : <span class="reserved">function</span>(x, y)
+  {
+    <span class="reserved">this</span>.curPos.x = x;
+    <span class="reserved">this</span>.curPos.y = y;
+<span class="comment">
+    // if something is selected</span>
+    <span class="reserved">if</span> (<span class="reserved">this</span>.selObj)
+      <span class="reserved">this</span>.selObj.update(<span class="reserved">this</span>);
+  },
+  <span class="comment">/**
+   * Select a note either for dragging or for resizing.
+   * <span class="attrib">@param</span> {Note} note the selected note
+   * <span class="attrib">@param</span> {event} ev the javascript event object
+   */</span>
+  select : <span class="reserved">function</span>(note, ev)
+  {
+    <span class="reserved">if</span> (<span class="reserved">this</span>.selObj) // something already selected
+      <span class="reserved">return</span>;
+
+    <span class="reserved">if</span> (get(note.id).style.cursor != <span class="literal">"move"</span>)
+      <span class="reserved">this</span>.selObj = new SelectedObjectResize(note, <span class="reserved">this</span>.notePosRel);
+    <span class="reserved">else</span>
+    {
+      <span class="reserved">if</span> (ev.altKey)
+      {
+        <span class="reserved">this</span>.selObj = new SelectedObjectResize(note, 
+              {<span class="literal">'top'</span>: false, <span class="literal">'bottom'</span>:true, <span class="literal">'left'</span>:false, <span class="literal">'right'</span>:true});
+      }
+      <span class="reserved">else</span> <span class="reserved">if</span> (ev.ctrlKey)
+        <span class="reserved">this</span>.selObj = new SelectedObjectDrag(note, true)
+      <span class="reserved">else</span>
+        <span class="reserved">this</span>.selObj = new SelectedObjectDrag(note, false);
+    }
+    <span class="reserved">this</span>.downPos = <span class="reserved">this</span>.curPos.copy();
+<span class="comment">    
+    // move the selected item to the top</span>
+    workspace.reZOrder(note.id);
+  },
+  <span class="comment">/**
+   * Release selected notes.
+   */</span>
+  deselect : <span class="reserved">function</span>()
+  {
+    <span class="reserved">if</span> (<span class="reserved">this</span>.selObj)
+    {
+      <span class="reserved">this</span>.selObj.deselect();
+      delete <span class="reserved">this</span>.selObj;
+    }
+  }
+};
+
+
+<span class="comment">/**
+ * Create a new Dragging object.
+ * <span class="attrib">@class</span> A class that contains information about note(s) that is being
+ * dragged.
+ * <span class="attrib">@see</span> Mouse#select
+ * <span class="attrib">@param</span> {Note} note a reference to the note being dragged
+ * <span class="attrib">@param</span> {boolean} isGroup are we dragging all notes of the same color?
+ * <span class="attrib">@constructor</span>
+ */</span>
+<span class="reserved">function</span> SelectedObjectDrag(note, isGroup)
+{
+  <span class="comment">/**
+   * The note(s) being dragged.
+   * <span class="attrib">@type</span> Array
+   */</span>
+  <span class="reserved">this</span>.notes = new Array();
+<span class="comment">  
+  // if ctrl is down, move all the notes of the same color</span>
+  <span class="reserved">if</span> (isGroup)
+  {
+    <span class="reserved">for</span> (var n in workspace.notes)
+    {
+      <span class="reserved">if</span> (workspace.notes[n].bgColor.toString() == note.bgColor.toString())
+      {
+        <span class="reserved">this</span>.notes.push( { <span class="literal">'id'</span> : workspace.notes[n].id, 
+              <span class="literal">'pos'</span> : workspace.notes[n].getPosition() } );
+      }
+    }
+  }
+  <span class="reserved">else</span> // single note move
+    <span class="reserved">this</span>.notes.push( { <span class="literal">'id'</span> : note.id, <span class="literal">'pos'</span> : note.getPosition() } );
+<span class="comment">  
+  // set the border color of the notes that are being moved</span>
+  var elt;
+  <span class="reserved">for</span> (n in <span class="reserved">this</span>.notes)
+  {
+    elt = get(<span class="reserved">this</span>.notes[n].id);
+    elt.style.border =  noteBorder + <span class="literal">'px #980000 solid'</span>;
+  }
+}
+<span class="comment">/**
+ * Update the position of note(s) when the user moves the mouse.
+ * <span class="attrib">@param</span> {Mouse} md a reference to the parent mouse object
+ */</span>
+SelectedObjectDrag.<span class="reserved">prototype</span>.update = <span class="reserved">function</span>(md)
+{
+  var offset = md.curPos.sub(md.downPos);
+  var elt;
+  <span class="reserved">for</span> (n in <span class="reserved">this</span>.notes)
+  {
+    elt = get(<span class="reserved">this</span>.notes[n].id);
+    var newPos = <span class="reserved">this</span>.notes[n].pos.add(offset);
+    elt.style.left = newPos.x + <span class="literal">'px'</span>;
+    elt.style.top = newPos.y + <span class="literal">'px'</span>;
+  }
+};
+<span class="comment">/**
+ * When we drop a note, we need to reset the colors of borders and add
+ * information to the undo stack.
+ */</span>
+SelectedObjectDrag.<span class="reserved">prototype</span>.deselect = <span class="reserved">function</span>()
+{
+<span class="comment">  // check to see if we moved the object(s). if we did, add </span>
+<span class="comment">  // information to the undo stack.</span>
+  var md = workspace.mouse;
+  var offset = md.curPos.sub(md.downPos);
+  <span class="reserved">if</span> (!offset.equals(new Point(0, 0)))
+  {
+    var f = {
+      title : <span class="literal">'move note(s)'</span>,
+      notes : <span class="reserved">this</span>.notes,
+      off : offset,
+      undo : <span class="reserved">function</span>()
+      {
+        var elt;
+        <span class="reserved">for</span> (n in <span class="reserved">this</span>.notes)
+        {
+          elt = get(<span class="reserved">this</span>.notes[n].id);
+          pos = <span class="reserved">this</span>.notes[n].pos;
+          elt.style.left = pos.x + <span class="literal">'px'</span>;
+          elt.style.top = pos.y + <span class="literal">'px'</span>;
+        }
+      },
+      redo : <span class="reserved">function</span>()
+      {
+        var elt;
+        <span class="reserved">for</span> (n in <span class="reserved">this</span>.notes)
+        {
+          elt = get(<span class="reserved">this</span>.notes[n].id);
+          pos = <span class="reserved">this</span>.notes[n].pos.add(<span class="reserved">this</span>.off);
+          elt.style.left = pos.x + <span class="literal">'px'</span>;
+          elt.style.top = pos.y + <span class="literal">'px'</span>;
+        }
+      }
+    };
+    
+    workspace.history.add(f);
+  }
+<span class="comment">  // reset the border color to black</span>
+  var elt;
+  <span class="reserved">for</span> (var n in <span class="reserved">this</span>.notes)
+  {
+    elt = get(<span class="reserved">this</span>.notes[n].id);
+    elt.style.border =  noteBorder + <span class="literal">'px '</span> + noteBorderColor + <span class="literal">' solid'</span>;
+  }
+};
+<span class="comment">
+
+// inheritance might be useful here</span>
+<span class="comment">/**
+ * Create a new Resizing object.
+ * <span class="attrib">@class</span> A class that contains information about a note being resized.
+ * <span class="attrib">@see</span> Mouse#select
+ * <span class="attrib">@param</span> {Note} note a reference to the note being dragged
+ * <span class="attrib">@param</span> {dictionary} pnotePosRel which edges are being resized? It is 
+ * a dictionary from string -&gt; boolean where the string is either
+ * 'top, 'right', 'bottom' or 'left' and true means the edge is moving.
+ * <span class="attrib">@constructor</span>
+ */</span>
+<span class="reserved">function</span> SelectedObjectResize(note, pnotePosRel)
+{
+  <span class="comment">/**
+   * The note being resized
+   * <span class="attrib">@type</span> Note
+   */</span>
+  <span class="reserved">this</span>.note = note;
+  <span class="comment">/**
+   * The original size of the note
+   * <span class="attrib">@type</span> Point
+   */</span>
+  <span class="reserved">this</span>.size = note.getSize();
+  <span class="comment">/**
+   * The original position of the note
+   * <span class="attrib">@type</span> Point
+   */</span>
+  <span class="reserved">this</span>.pos = note.getPosition();
+  <span class="comment">/**
+   * The edges being moved.
+   * <span class="attrib">@type</span> dictionary
+   */</span>
+  <span class="reserved">this</span>.edges = pnotePosRel;
+}
+<span class="comment">/**
+ * Update the size of the note when the user moves the mouse.
+ * <span class="attrib">@param</span> {Mouse} md a reference to the parent Mouse object
+ */</span>
+SelectedObjectResize.<span class="reserved">prototype</span>.update = <span class="reserved">function</span>(md)
+{
+  var elt = get(<span class="reserved">this</span>.note.id);
+<span class="comment">
+  // this depends on which edge they grabbed</span>
+  var minSize = 10;
+  var offset = md.curPos.sub(md.downPos);
+  <span class="reserved">if</span> (<span class="reserved">this</span>.edges[<span class="literal">'top'</span>])
+  {
+    <span class="reserved">if</span> (<span class="reserved">this</span>.size.y - offset.y &gt; minSize)
+    {
+      elt.style.top = (<span class="reserved">this</span>.pos.y + offset.y) + <span class="literal">'px'</span>;
+      elt.style.height = (<span class="reserved">this</span>.size.y - offset.y) + <span class="literal">'px'</span>;
+    }
+  }
+  <span class="reserved">else</span> <span class="reserved">if</span> (<span class="reserved">this</span>.edges[<span class="literal">'bottom'</span>])
+    elt.style.height = Math.max(<span class="reserved">this</span>.size.y + offset.y, minSize) + <span class="literal">'px'</span>;
+  
+  <span class="reserved">if</span> (<span class="reserved">this</span>.edges[<span class="literal">'left'</span>])
+  {
+    <span class="reserved">if</span> (<span class="reserved">this</span>.size.x - offset.x &gt; minSize)
+    {
+      elt.style.left = (<span class="reserved">this</span>.pos.x + offset.x) + <span class="literal">'px'</span>;
+      elt.style.width = (<span class="reserved">this</span>.size.x - offset.x) + <span class="literal">'px'</span>;
+    }
+  }
+  <span class="reserved">else</span> <span class="reserved">if</span> (<span class="reserved">this</span>.edges[<span class="literal">'right'</span>])
+    elt.style.width = Math.max(<span class="reserved">this</span>.size.x + offset.x, minSize) + <span class="literal">'px'</span>;
+  
+  <span class="reserved">if</span> (<span class="reserved">this</span>.note.parent.edit == <span class="reserved">this</span>.note)
+  {
+    var edit = get(<span class="reserved">this</span>.note.id + <span class="literal">'text'</span>);
+    var pSize = <span class="reserved">this</span>.note.getCorrectedSize();
+    pSize.x -= 2*(noteBorder+notePadding+1);
+    pSize.y -= 2*(noteBorder+notePadding+1) + 16;
+    edit.style.height = pSize.y + <span class="literal">'px'</span>;
+    edit.style.width = pSize.x + <span class="literal">'px'</span>;
+  }
+  
+  <span class="reserved">this</span>.note.updateSize();
+};
+<span class="comment">/**
+ * Add information to the undo stack when the user stops resizing.
+ */</span>
+SelectedObjectResize.<span class="reserved">prototype</span>.deselect = <span class="reserved">function</span>() 
+{
+<span class="comment">  // add information to the undo stack if the item was resized</span>
+  var curSize = <span class="reserved">this</span>.note.getSize();
+  
+  <span class="reserved">if</span> (!<span class="reserved">this</span>.size.equals(curSize))
+  {
+    var f = {
+      title : <span class="literal">'resize note'</span>,
+      usize : <span class="reserved">this</span>.size,
+      upos : <span class="reserved">this</span>.pos,
+      rsize : curSize,
+      rpos : <span class="reserved">this</span>.note.getPosition(),
+      id : <span class="reserved">this</span>.note.id,
+      undo : <span class="reserved">function</span>()
+      {
+        <span class="reserved">this</span>.set(<span class="reserved">this</span>.usize, <span class="reserved">this</span>.upos);
+      },
+      redo : <span class="reserved">function</span>()
+      {
+        <span class="reserved">this</span>.set(<span class="reserved">this</span>.rsize, <span class="reserved">this</span>.rpos);
+      },
+      set : <span class="reserved">function</span>(size, pos)
+      {
+        var elt = get(<span class="reserved">this</span>.id);
+        elt.style.top = pos.y + <span class="literal">'px'</span>;
+        elt.style.left = pos.x + <span class="literal">'px'</span>;
+        elt.style.height = size.y + <span class="literal">'px'</span>;
+        elt.style.width = size.x + <span class="literal">'px'</span>;
+        workspace.notes[<span class="reserved">this</span>.id].updateSize();
+      }
+    };
+    workspace.history.add(f);
+  }
+};
+
+
+<span class="comment">/**
+ * <span class="attrib">@class</span> A class that maintains the undo/redo stacks.
+ */</span>
+var History =
+{
+  <span class="comment">/**
+   * The number of items to keep in the undo stack.
+   * <span class="attrib">@type</span> int
+   */</span>
+  maxSize : 40,
+  <span class="comment">/**
+   * <span class="attrib">@type</span> Array
+   */</span>
+  undoStack : new Array(), // each item in the array is an object
+  <span class="comment">/**
+   * <span class="attrib">@type</span> Array
+   */</span>
+  redoStack : new Array(), // with methods called undo and redo
+  
+  <span class="comment">/**
+   * Add an event to the undo stack.  This clears the redo stack.
+   * <span class="attrib">@param</span> {function} funcPtr a closure that when called will
+   * undo the last action
+   */</span>
+  add : <span class="reserved">function</span>(funcPtr)
+  {
+    <span class="reserved">this</span>.redoStack = new Array();
+    <span class="reserved">this</span>.undoStack.push(funcPtr);
+    <span class="reserved">if</span> (<span class="reserved">this</span>.undoStack.length &gt; <span class="reserved">this</span>.maxSize)
+      <span class="reserved">this</span>.undoStack.shift();
+    <span class="reserved">this</span>.updateTitles();
+  },
+  <span class="comment">/**
+   * Undo the last action and move an item from the undo stack to the 
+   * redo stack.
+   */</span>
+  undo : <span class="reserved">function</span>()
+  {
+    <span class="reserved">if</span> (<span class="reserved">this</span>.undoStack.length &gt; 0)
+    {
+      var f = <span class="reserved">this</span>.undoStack.pop();
+      <span class="reserved">this</span>.redoStack.push(f);
+      f.undo();
+      <span class="reserved">this</span>.updateTitles();
+    }
+  },
+  <span class="comment">/**
+   * Redo the last undo action.  Moves the action back to the undo stack.
+   */</span>
+  redo : <span class="reserved">function</span>()
+  {
+    <span class="reserved">if</span> (<span class="reserved">this</span>.redoStack.length &gt; 0)
+    {
+      var f = <span class="reserved">this</span>.redoStack.pop();
+      <span class="reserved">this</span>.undoStack.push(f);
+      f.redo();
+      <span class="reserved">this</span>.updateTitles();
+    }
+  },
+  <span class="comment">/**
+   * Update the tool tips on the undo and redo icons.
+   */</span>
+  updateTitles : <span class="reserved">function</span>()
+  {
+    var elt = get(<span class="literal">'undoImg'</span>);
+    <span class="reserved">if</span> (0 == <span class="reserved">this</span>.undoStack.length)
+    {
+      elt.title = <span class="literal">'nothing to undo'</span>;
+      elt.className = <span class="literal">'controlsDisabled'</span>;
+      elt = get(<span class="literal">'saveImg'</span>);
+      elt.className = <span class="literal">'controlsDisabled'</span>;
+    }
+    <span class="reserved">else</span>
+    {
+      elt.title = <span class="reserved">this</span>.undoStack[<span class="reserved">this</span>.undoStack.length-1].title 
+          + <span class="literal">' ('</span> + <span class="reserved">this</span>.undoStack.length + <span class="literal">' action(s))'</span>;
+      elt.className = <span class="literal">'controls'</span>;
+      elt = get(<span class="literal">'saveImg'</span>);
+      elt.className = <span class="literal">'controls'</span>;
+    }
+    elt = get(<span class="literal">'redoImg'</span>);
+    <span class="reserved">if</span> (0 == <span class="reserved">this</span>.redoStack.length)
+    {
+      elt.title = <span class="literal">'nothing to redo'</span>;
+      elt.className = <span class="literal">'controlsDisabled'</span>;
+    }
+    <span class="reserved">else</span>
+    {
+      elt.title = <span class="reserved">this</span>.redoStack[<span class="reserved">this</span>.redoStack.length-1].title 
+          + <span class="literal">' ('</span> + <span class="reserved">this</span>.redoStack.length + <span class="literal">' action(s))'</span>;
+      elt.className = <span class="literal">'controls'</span>;
+    }
+  }
+};
+<span class="comment">
+// </span>
+<span class="comment">/**
+ * <span class="attrib">@class</span> A generator class that returns the position of the next new note.
+ */</span>
+var NotePos =
+{
+  <span class="comment">/**
+   * <span class="attrib">@type</span> int
+   */</span>
+  x : 170,
+  <span class="comment">/**
+   * <span class="attrib">@type</span> int
+   */</span>
+  y : 40,
+  <span class="comment">/**
+   * Compute the position of a new note given the size of the note.
+   * <span class="attrib">@param</span> {int} w the width of the new note
+   * <span class="attrib">@param</span> {int} h the height of the new note
+   * <span class="attrib">@type</span> Point
+   */</span>
+  nextPos : <span class="reserved">function</span>(w, h)
+  {
+    var ret = new Point(<span class="reserved">this</span>.x, <span class="reserved">this</span>.y);
+    
+    <span class="reserved">this</span>.x += 20;
+    <span class="reserved">this</span>.y += 20;
+    var s = getPageSize();
+    <span class="reserved">if</span> (<span class="reserved">this</span>.x + w &gt; s.x || <span class="reserved">this</span>.y + h &gt; s.y)
+    {
+      <span class="reserved">this</span>.x = 40;
+      <span class="reserved">this</span>.y = 40;
+    }
+    
+    <span class="reserved">return</span> ret;
+  }
+};
+
+
+<span class="comment">/**
+ * <span class="attrib">@class</span> A class that represents the workspace.  This includes maintaining
+ * information about the notes and undo/redo information.
+ */</span>
+var workspace = 
+{
+  <span class="comment">/**
+   * A dictionary of all the notes.
+   * <span class="attrib">@type</span> dictionary
+   */</span>
+  notes : {},
+  <span class="comment">/**
+   * When creating new notes, we sometimes need to assign a random name to
+   * it.  The first random note is note0, the second is note1, etc.
+   * <span class="attrib">@type</span> int
+   */</span>
+  nextNoteNum : 0,
+  <span class="comment">/**
+   * Number of notes on the workspace.  We keep this as a separate variable
+   * since there's no way to determine the size of a dictionary.
+   * <span class="attrib">@type</span> int
+   */</span>
+  numNotes : 0,
+  <span class="comment">/**
+   * The last time that we loaded this workspace (used to check for update
+   * collision).
+   * <span class="attrib">@type</span> int
+   */</span>
+  loadedTime : 0,
+  <span class="comment">/**
+   * Have we changed the workspace?
+   * <span class="attrib">@type</span> boolean
+   */</span>
+  changed : false,
+  <span class="comment">/**
+   * The note we are editing.
+   * <span class="attrib">@type</span> Note
+   */</span>
+  edit : <span class="literal">''</span>,
+  <span class="comment">/**
+   * The name of the workspace.
+   * <span class="attrib">@type</span> string
+   */</span>
+  name : <span class="literal">'Untitled'</span>,
+  
+  <span class="comment">/**
+   * <span class="attrib">@type</span> History
+   */</span>
+  history : History,
+  <span class="comment">/**
+   * <span class="attrib">@type</span> NotePos
+   */</span>
+  notePos : NotePos,
+  <span class="comment">/**
+   * <span class="attrib">@type</span> Mouse
+   */</span>
+  mouse : Mouse,
+  <span class="comment">/**
+   * Should keyboard shortcuts work?
+   * <span class="attrib">@type</span> boolean
+   */</span>
+  shortcuts : true,
+  <span class="comment">/**
+   * The id of the note on top.
+   * <span class="attrib">@type</span> string
+   */</span>
+  topId: <span class="literal">''</span>,
+
+  <span class="comment">/**
+   * Create a new note. Any of the parameter values may be left blank
+   * and default values will be used.
+   * <span class="attrib">@param</span> {dictionary} note a dictionary with any of the following keys:
+   * note['id'] = the name of the note&lt;br /&gt;
+   * note['xPos'] = the x position of the note&lt;br /&gt;
+   * note['yPos'] = the y position of the note&lt;br /&gt;
+   * note['height'] = the height of the note&lt;br /&gt;
+   * note['width'] = the width of the note&lt;br /&gt;
+   * note['bgcolor'] = the background color of the note (hex)&lt;br /&gt;
+   * note['zIndex'] = the stacking position of the note&lt;br /&gt;
+   * note['text'] = the text value of the note&lt;br /&gt;
+   */</span>
+  createNote : <span class="reserved">function</span>(note)
+  {
+    <span class="reserved">if</span> (!note)
+      note = {};
+    <span class="reserved">if</span> (!(<span class="literal">'id'</span> in note))
+    {
+      note.id = <span class="literal">"note"</span> + <span class="reserved">this</span>.nextNoteNum;
+<span class="comment">      
+      // a new note is being made, save information to the undo stack</span>
+      var self = <span class="reserved">this</span>;
+      var f = {
+        title : <span class="literal">'create note'</span>,
+        nnn : <span class="reserved">this</span>.nextNoteNum,
+        id : note.id,
+        pos : new Point(<span class="reserved">this</span>.notePos.x, <span class="reserved">this</span>.notePos.y),
+        undo : <span class="reserved">function</span>()
+        {
+          self.notes[<span class="reserved">this</span>.id].destroy(); // don<span class="literal">'t add to history
+          self.nextNoteNum = this.nnn;
+        },
+        redo : function()
+        {
+          self.createNote({'</span>id<span class="literal">': this.id, '</span>xPos<span class="literal">' : this.pos.x, 
+              '</span>yPos<span class="literal">' : this.pos.y});
+          self.nextNoteNum++;
+        }
+      };
+      this.history.add(f);
+      
+      this.nextNoteNum++;
+    }
+
+    // don'</span>t create a layer <span class="reserved">if</span> it already exists, just move it to the top
+    <span class="reserved">if</span> (get(note.id))
+    {
+      <span class="reserved">this</span>.reZOrder(note.id);
+      <span class="reserved">return</span> note;
+    }
+    
+    <span class="reserved">if</span> (!(<span class="literal">'height'</span> in note)) note.height = 150;
+    <span class="reserved">if</span> (!(<span class="literal">'width'</span> in note)) note.width = 250;
+
+    var pos;
+    <span class="reserved">if</span> (!(<span class="literal">'xPos'</span> in note) || !(<span class="literal">'yPos'</span> in note))
+      pos = <span class="reserved">this</span>.notePos.nextPos(note.width, note.height);
+    <span class="reserved">if</span> (!(<span class="literal">'xPos'</span> in note)) note.xPos = pos.x;
+    <span class="reserved">if</span> (!(<span class="literal">'yPos'</span> in note)) note.yPos = pos.y;
+
+    <span class="reserved">if</span> (!(<span class="literal">'bgcolor'</span> in note)) note.bgcolor = bgColors[0].toString();
+    
+    <span class="reserved">if</span> (!(<span class="literal">'text'</span> in note)) note.text = <span class="literal">''</span>;
+<span class="comment">
+    // disable editing of a different note</span>
+    <span class="reserved">this</span>.editOff();
+    
+    var newDiv = document.createElement(<span class="literal">'div'</span>);
+    newDiv.setAttribute(<span class="literal">'class'</span>, <span class="literal">'note'</span>);
+    newDiv.setAttribute(<span class="literal">'id'</span>, note.id);
+    newDiv.setAttribute(<span class="literal">'onmouseover'</span>, <span class="literal">'workspace.notes.'</span> + note.id + <span class="literal">'.mouseOver();'</span>);
+    newDiv.setAttribute(<span class="literal">'onmouseout'</span>, <span class="literal">'workspace.notes.'</span> + note.id + <span class="literal">'.mouseOut();'</span>);
+    newDiv.setAttribute(<span class="literal">'onmousedown'</span>, <span class="literal">'workspace.notes.'</span> + note.id + <span class="literal">'.mouseDown(event);'</span>);
+    newDiv.setAttribute(<span class="literal">'onmouseup'</span>, <span class="literal">'workspace.notes.'</span> + note.id + <span class="literal">'.mouseUp();'</span>);
+    newDiv.setAttribute(<span class="literal">'onmousemove'</span>, <span class="literal">'workspace.notes.'</span> + note.id + <span class="literal">'.mouseMove(event);'</span>);
+    newDiv.setAttribute(<span class="literal">'ondblclick'</span>, <span class="literal">'workspace.notes.'</span> + note.id + <span class="literal">'.mouseDblClick();'</span>);
+    newDiv.setAttribute(<span class="literal">'title'</span>, <span class="literal">'double click to edit'</span>);
+<span class="comment">    // work around a safari bug</span>
+    <span class="reserved">if</span> (isSaf)
+      newDiv.style.opacity = <span class="literal">'0.99'</span>;
+    document.body.appendChild(newDiv);
+<span class="comment">
+    //document.body.innerHTML += newDiv;</span>
+    var elt = get(note.id);
+    elt.style.backgroundColor = note.bgcolor;
+    elt.style.width = note.width + <span class="literal">'px'</span>;
+    elt.style.height = note.height + <span class="literal">'px'</span>;
+    elt.style.left = note.xPos + <span class="literal">'px'</span>;
+    elt.style.top = note.yPos + <span class="literal">'px'</span>;
+    elt.style.padding = notePadding + <span class="literal">'px'</span>;
+    elt.style.position = <span class="literal">'absolute'</span>;
+    elt.style.border = noteBorder + <span class="literal">'px '</span> + noteBorderColor + <span class="literal">' solid'</span>;
+
+    <span class="reserved">if</span> (!(<span class="literal">'zIndex'</span> in note)) {
+      <span class="reserved">this</span>.reZOrder();
+      elt.style.zIndex = <span class="reserved">this</span>.numNotes + 1;
+      <span class="reserved">this</span>.topId = note.id;
+    } <span class="reserved">else</span> {
+      elt.style.zIndex = note.zIndex;
+      var topElt = get(<span class="reserved">this</span>.topId);
+      <span class="reserved">if</span> (topElt) {
+        <span class="reserved">if</span> (parseInt(note.zIndex) &gt; parseInt(topElt.style.zIndex)) {
+          <span class="reserved">this</span>.topId = note.id;
+        }
+      } <span class="reserved">else</span> {
+        <span class="reserved">this</span>.topId = note.id;
+      }
+    }
+    <span class="reserved">this</span>.numNotes++;
+    var nNote = new Note(elt, <span class="reserved">this</span>, note.text);
+    <span class="reserved">this</span>.notes[nNote.id] = nNote;
+
+    <span class="reserved">if</span> (isIE) {
+      var n = nNote;
+      newDiv.onmouseover = <span class="reserved">function</span>() {
+        n.mouseOver();
+      };
+      newDiv.onmouseout = <span class="reserved">function</span>() {
+        n.mouseOut();
+      };
+      newDiv.onmousedown = <span class="reserved">function</span>() {
+        n.mouseDown(event);
+      };
+      newDiv.onmouseup = <span class="reserved">function</span>() {
+        n.mouseUp();
+      };
+      newDiv.onmousemove = <span class="reserved">function</span>() {
+        n.mouseMove(event);
+      }
+      newDiv.ondblclick = <span class="reserved">function</span>() {
+        n.mouseDblClick();
+      };
+    }
+    <span class="reserved">this</span>.filter(<span class="literal">''</span>);
+    
+    <span class="reserved">return</span> nNote;
+  },
+  <span class="comment">/**
+   * Mouse up action on the workspace.
+   */</span>
+  mouseUp : <span class="reserved">function</span>()
+  {
+    <span class="reserved">if</span> (<span class="reserved">this</span>.mouse.selObj)
+    {
+      <span class="reserved">this</span>.mouse.selObj.deselect();
+      delete <span class="reserved">this</span>.mouse.selObj;
+    }
+  },
+  <span class="comment">/**
+   * If we are editing any note, stop editing.
+   */</span>
+  editOff : <span class="reserved">function</span>()
+  {
+    <span class="reserved">if</span> (<span class="reserved">this</span>.edit)
+    {
+      var textbox = get(<span class="reserved">this</span>.edit.id + <span class="literal">'text'</span>);
+<span class="comment">      
+      // check to see if the text changed.  add to the</span>
+<span class="comment">      // undo stack if it did.</span>
+      <span class="reserved">if</span> (textbox.value != <span class="reserved">this</span>.edit.text)
+      {
+        var f = {
+          title : <span class="literal">'edit note'</span>,
+          utext : <span class="reserved">this</span>.edit.text,
+          rtext : textbox.value,
+          note : <span class="reserved">this</span>.edit,
+          undo : <span class="reserved">function</span>()
+          {
+            <span class="reserved">this</span>.note.setText(<span class="reserved">this</span>.utext);
+          },
+          redo : <span class="reserved">function</span>()
+          {
+            <span class="reserved">this</span>.note.setText(<span class="reserved">this</span>.rtext);
+          }
+        };
+        <span class="reserved">this</span>.history.add(f);
+      }
+      
+      <span class="reserved">this</span>.edit.setText(textbox.value);
+      <span class="reserved">this</span>.edit = <span class="literal">''</span>;
+    }
+  },
+  <span class="comment">/**
+   * Resort the notes and place topNoteID in front.
+   * <span class="attrib">@param</span> {string} topNoteID the name of the note to bring to the front.
+   */</span>
+  reZOrder : <span class="reserved">function</span>(topNoteID)
+  {
+    <span class="reserved">if</span> (<span class="reserved">this</span>.notes) {
+<span class="comment">      // it's not possible to sort an associative array</span>
+<span class="comment">      // so we copy it into a regular array first</span>
+      var nArray = new Array();
+      var i = 0;
+      <span class="reserved">for</span> (nid in <span class="reserved">this</span>.notes) {
+        nArray[i] = <span class="reserved">this</span>.notes[nid];
+        i++;
+      }
+      
+      nArray.sort(cmpNotesZ);
+<span class="comment">
+      // set zIndex based on order</span>
+      var found = 0;
+      <span class="reserved">for</span> (i = 0; i &lt; nArray.length; i++) {
+        <span class="reserved">if</span> (nArray[i].id == topNoteID) {
+          found = 1;
+          get(nArray[i].id).style.zIndex = <span class="reserved">this</span>.numNotes;
+          <span class="reserved">this</span>.topId = nArray[i].id;
+        }
+        <span class="reserved">else</span>
+          get(nArray[i].id).style.zIndex = i + 1 - found;
+      }
+    }
+  },
+  
+  <span class="comment">/**
+   * Set the name of the workspace.  NOTE: this changes where notes get
+   * saved.
+   * <span class="attrib">@param</span> {string} n the new name
+   */</span>
+  setName : <span class="reserved">function</span>(n)
+  {
+    <span class="reserved">this</span>.name = n;
+    var elt = get(<span class="literal">'wsname'</span>);
+    elt.innerHTML = <span class="reserved">this</span>.name;
+  },
+  
+  <span class="comment">/**
+   * This function acts as an "Expose`" like feature for the notes
+   * It sets all of the notes to relative positioning and then grabs
+   * the relative location, sets its "top" and "left" properties then
+   * resets the positioning to absolute. -sph
+   *
+   * original patch submitted by Sean Hannan
+   *
+   * This isn't quite ready for release.
+   */</span>
+  expose : <span class="reserved">function</span>() {
+    var n, style;
+    <span class="reserved">for</span> (n in <span class="reserved">this</span>.notes) { //loop through the notes
+      var note = <span class="reserved">this</span>.notes[n];
+      var elt = get(note.id);  // get the div
+      style = elt.style; //get the note<span class="literal">'s style
+      
+      // save old values
+      note.lastX = style.left;
+      note.lastY = style.top;
+      note.lastWidth = style.width;
+      note.lastHeight = style.height;
+      
+      //Set the styles so that the notes nicely tile
+      style.position = '</span>relative<span class="literal">';
+      style.margin = '</span>5px<span class="literal">';
+      style.left = '</span><span class="literal">';
+      style.top = '</span><span class="literal">';
+      style.cssFloat = '</span>left<span class="literal">';
+      style.styleFloat = '</span>left<span class="literal">';
+      style.display = '</span><span class="literal">';
+      style.width = parseInt(exposeSize / 100.0 * parseInt(style.width)) + '</span>px<span class="literal">';
+      style.height = parseInt(exposeSize / 100.0 * parseInt(style.height)) + '</span>px<span class="literal">';
+      style.fontSize = exposeSize + '</span>%<span class="literal">';
+      
+      //get and set the position of the div
+      var pos = findPos(elt);
+      style.left = pos.x + '</span>px<span class="literal">';
+      style.top = pos.y + '</span>px<span class="literal">';
+    }
+    //loop through again to make it absolute.
+    for (n in this.notes) {
+      style = get(this.notes[n].id).style;
+      style.position = '</span>absolute<span class="literal">';
+      style.cssFloat = '</span>none<span class="literal">';
+      style.styleFloat = '</span>none<span class="literal">';
+      style.margin = '</span><span class="literal">';
+    }
+  },
+  
+  _expose : function() {
+    for (var n in this.notes) {  //loop through notes
+      var note = this.notes[n];
+      var style = get(note.id).style; //get the Div
+      
+      // restore values
+      style.top = note.lastY;
+      style.left = note.lastX;
+      style.width = note.lastWidth;
+      style.height = note.lastHeight;
+      style.fontSize = '</span>100%<span class="literal">';
+    }
+  },
+
+  /**
+   * Filter the visible notes (kind of like a search).  Notes that match
+   * the regular expression are moved to the front while other notes are
+   * disabled and become mostly transparent.
+   * @param {string} text the regular expression to filter by
+   */
+  filter : function(text)
+  {
+    var shouldHide;
+    if (text.trim().substring(0, 6) == '</span>color:<span class="literal">')
+    {
+      var color = text.trim().substring(6);
+      shouldHide = function(note)
+      {
+        return (colorMap[note.bgColor.toString()] == color);
+      };
+    }
+    else
+    {
+      var reg = new RegExp(text, '</span>i<span class="literal">');
+      shouldHide = function(note)
+      {
+        return reg.test(note.text);
+      };
+    }
+
+    for (n in this.notes)
+    {
+      var note = this.notes[n];
+      var elt = get(note.id);
+      if (shouldHide(note))
+      {
+        elt.className = '</span>note<span class="literal">';
+        if (isSaf)
+          elt.style.opacity = '</span>0.99<span class="literal">';
+        note.enable();
+        get('</span>m<span class="literal">' + note.id).className = '</span>note<span class="literal">';
+      }
+      else
+      {
+        elt.className = '</span>noteHide<span class="literal">';
+        elt.style.zIndex = 0;
+        if (isSaf)
+          elt.style.opacity = '</span>0.2<span class="literal">';
+        note.disable();
+        get('</span>m<span class="literal">' + note.id).className = '</span>noteHide<span class="literal">';
+      }
+    }
+    get('</span>textfilter<span class="literal">').value = text;
+    this.reZOrder();
+    this.updateMiniBox();
+  },
+  /**
+   * Update the background color and tool tips of the mini notes.
+   */
+  updateMiniBox : function()
+  {
+    var mini = get('</span>mini<span class="literal">');
+    var vNotes = 0;
+    var total = 0;
+    
+    for (n in this.notes)
+    {
+      total++;
+      var tmp = new Color(get('</span>m<span class="literal">' + n).style.backgroundColor);
+      if (!(0 == tmp.r &amp;&amp; 0 == tmp.g &amp;&amp; 0 == tmp.b))
+        vNotes++;
+    }
+    
+    // set the width of the mini div
+    var diff = parseInt(Math.max(0, total - 9) / 2) * 10;
+    if (isIE) diff += 5; // padding + border
+    mini.style.width = (diff + miniWidth) + '</span>px<span class="literal">';
+    
+    if (0 == total)
+      mini.title = '</span>you have no notes<span class="literal">';
+    else if (vNotes == total)
+      mini.title = '</span>showing all <span class="literal">' + total + '</span> notes<span class="literal">';
+    else if (0 == vNotes)
+      mini.title = '</span>hiding all <span class="literal">' + total + '</span> notes<span class="literal">';
+    else
+      mini.title = '</span>showing <span class="literal">' + vNotes + '</span> of <span class="literal">' + total + '</span> notes (<span class="literal">' 
+            + parseInt(100 * vNotes / total) + '</span>%)<span class="literal">';
+  },
+  /**
+   * Create the "load old notes" note.
+   * @param {int} offset how many saves do we want to go back?
+   */
+  loadlist : function(offset)
+  {
+    if (!offset)
+      offset = 0;
+    
+    var xmlhttp = getxmlreqobj();
+    var self = this;
+    xmlhttp.onreadystatechange = function() {
+        if (4 == xmlhttp.readyState &amp;&amp; 200 == xmlhttp.status)
+        {
+          var loadTimes = xmlhttp.responseText.split('</span>|<span class="literal">');
+          self.createNote( {
+            '</span>id<span class="literal">' : '</span>load<span class="literal">',
+            '</span>height<span class="literal">' : '</span>130<span class="literal">',
+            '</span>width<span class="literal">' : '</span>270<span class="literal">',
+            '</span>bgcolor<span class="literal">' : '</span>#ffff30<span class="literal">'
+          } );
+          
+          var txt = '</span>If you wish to load a previous version of <span class="reserved">this</span> workspace, <span class="literal">'
+                + '</span>select the time from the list and press load.<span class="literal">'
+                + '</span>&lt;div style=<span class="literal">"text-align: center;"</span>&gt;&lt;form method=<span class="literal">"GET"</span> action=<span class="literal">"load.py"</span> onmousedown=<span class="literal">"event.cancelBubble=true;"</span>&gt;<span class="literal">'
+                + '</span>&lt;input type=<span class="literal">"hidden"</span> name=<span class="literal">"name"</span> value=<span class="literal">"'
+                + escape(self.name) + '"</span> /&gt;&lt;select class=<span class="literal">"loadfrm"</span> name=<span class="literal">"time"</span>&gt;<span class="literal">';
+          for (var i = 0; i &lt; loadTimes.length &amp;&amp; i &lt; 10; i++)
+          {
+            txt += "&lt;option value='</span><span class="literal">" + loadTimes[i].trim() + "</span><span class="literal">'&gt;" 
+                   + (new MyDate(loadTimes[i])) + "&lt;/option&gt;";
+          }
+          
+          txt += "&lt;/select&gt;&lt;input type='</span>submit<span class="literal">' value='</span>load<span class="literal">' /&gt;&lt;br /&gt;&lt;span style='</span>font-size: 0.8em;<span class="literal">'&gt;";
+          
+          if (loadTimes.length &gt; 10)
+          {
+            txt += "&amp;laquo; &lt;a class='</span>fakelink<span class="literal">' onclick='</span>workspace.loadlist(<span class="literal">" + (offset+10) + "</span>)<span class="literal">'&gt;older&lt;/a&gt; ";
+            if (offset &gt; 0)
+              txt += "| ";
+          }
+          if (offset &gt; 0)
+            txt += "&lt;a class='</span>fakelink<span class="literal">' onclick='</span>workspace.loadlist(<span class="literal">" + (offset-10) + "</span>)<span class="literal">'&gt;newer&lt;/a&gt; &amp;raquo;";
+          
+          txt += "&lt;br /&gt;all times are US Eastern Time&lt;/span&gt;&lt;/div&gt;";
+          
+          self.notes['</span>load<span class="literal">'].setText(txt);
+          self.reZOrder('</span>load<span class="literal">');
+        }
+    };
+    this.createNote( {
+      '</span>id<span class="literal">' : '</span>load<span class="literal">',
+      '</span>height<span class="literal">' : '</span>130<span class="literal">',
+      '</span>width<span class="literal">' : '</span>270<span class="literal">',
+      '</span>bgcolor<span class="literal">' : '</span>#ffff30<span class="literal">'
+    } );
+    var txt = '</span>getting load data...<span class="literal">';
+    this.notes['</span>load<span class="literal">'].setText(txt);
+    this.reZOrder('</span>load<span class="literal">');
+
+    xmlhttp.open('</span>GET<span class="literal">', '</span>getdates.py?name=<span class="literal">' + escape(escape(this.name)) + '</span>&amp;offset=<span class="literal">' + offset, true);
+    xmlhttp.send('</span><span class="literal">');
+  },
+  /**
+   * Checks to see if the notes have changed since the last time we loaded
+   * the notes.
+   */
+  checkUpdated : function()
+  {
+    var xmlhttp = getxmlreqobj();
+    var self = this;
+    xmlhttp.onreadystatechange = function() {
+        if (4 == xmlhttp.readyState &amp;&amp; 200 == xmlhttp.status)
+        {
+          var loadTime = xmlhttp.responseText.trim();
+          if (loadTime &gt; self.loadedTime)
+          {
+            self.createNote( {
+              '</span>id<span class="literal">' : '</span>updated<span class="literal">',
+              '</span>xPos<span class="literal">' : '</span>0<span class="literal">',
+              '</span>yPos<span class="literal">' : '</span>40<span class="literal">',
+              '</span>bgcolor<span class="literal">' : '</span>#ff6060<span class="literal">',
+              '</span>height<span class="literal">' : '</span>100<span class="literal">',
+              '</span>text<span class="literal">' : "This workspace has been changed by someone else while you were working on it.  If you want to see what the workspace looks like now, you can &lt;a href='</span><span class="literal">" 
+                    + escape(escape(escape(self.name))) + "</span><span class="literal">' target='</span>_new<span class="literal">'&gt;open it in a new window&lt;/a&gt;."
+            });
+          }
+          else
+          {
+            window.setTimeout('</span>workspace.checkUpdated()<span class="literal">', 1000*60*10);
+          }
+        }
+    };
+    xmlhttp.open('</span>GET<span class="literal">', '</span>getrecent.py?name=<span class="literal">' + escape(escape(this.name)), true);
+    xmlhttp.send('</span><span class="literal">');
+  },
+  /**
+   * Generate the xml representation of the workspace (used when saving).
+   * @type string
+   */
+  toString : function()
+  {
+    var ret = "&lt;workspace name='</span><span class="literal">" + escape(this.name) + "</span><span class="literal">'";
+    ret += " nextNoteNum='</span><span class="literal">" + this.nextNoteNum + "</span><span class="literal">'";
+    ret += "&gt;\n";
+    for (nid in this.notes)
+      ret += this.notes[nid].toXML() + "\n";
+    return ret + "&lt;/workspace&gt;"
+  },
+  /**
+   * Get the next (or previous) note relative to the top note.
+   * @param {int} diff The offset from the top note (positive mean
+   * below and negative mean up from the bottom note).
+   */
+  selectNote : function(diff)
+  {
+    var max = -1;
+    var maxNote;
+    var noteArr = [];
+    // determine which note is on top
+    for (var n in this.notes)
+    {
+      var cur = parseInt(get(this.notes[n].id).style.zIndex);
+      if (cur &gt; max)
+      {
+        max = cur;
+        maxNote = noteArr.length;
+      }
+      noteArr.push(this.notes[n]);
+    }
+    noteArr[ (maxNote+diff+noteArr.length) % noteArr.length ].select();
+  },
+  /**
+   * Save the workspace.
+   */
+  save : function()
+  {
+    // there have to be changes to the workspace before saving is enabled
+    var s = get('</span>saveImg<span class="literal">');
+    if (s.className == '</span>controlsDisabled<span class="literal">')
+      return;
+    
+    s.src = '</span>images/saving.gif<span class="literal">';
+    this.editOff();
+    
+    var xmlhttp = getxmlreqobj();
+    var self = this;
+    xmlhttp.onreadystatechange = function() {
+        if (4 == xmlhttp.readyState &amp;&amp; 200 == xmlhttp.status)
+        {
+          var doc = xmlhttp.responseXML;
+          db("response: " + xmlhttp.responseText);
+          if (doc &amp;&amp; '</span>ok<span class="literal">' == doc.getElementsByTagName('</span>status<span class="literal">')[0].getAttribute('</span>value<span class="literal">'))
+          {
+            self.changed = false;
+            get('</span>saveImg<span class="literal">').className = '</span>controlsDisabled<span class="literal">';
+            self.loadedTime = doc.getElementsByTagName('</span>status<span class="literal">')[0].getAttribute('</span>update<span class="literal">');
+          }
+          else
+            alert("Failed to save notes (server error). Please notify the administrator by sending an email to " + adminEmail + " Include what browser you'</span>re using and the time the error occurred. Thanks.<span class="literal">");
+          get('saveImg').src = 'images/save.gif';
+        }
+        else if (4 == xmlhttp.readyState)
+        {
+          db(xmlhttp.status);
+          alert("</span>Failed to save notes (status error). It looks like the save request failed.  Please try again.  If the problem persists, notify me by sending an email to <span class="literal">" + adminEmail + "</span>.  Include what browser you<span class="literal">'re using and the time the error occurred. Thanks.");
+          get('</span>saveImg<span class="literal">').src = '</span>images/save.gif<span class="literal">';
+        }
+      };
+    
+    xmlhttp.open('</span>POST<span class="literal">', '</span>save.py<span class="literal">', true);
+    xmlhttp.send(workspace.toString());
+  }
+};
+
+///
+/// global methods
+///
+
+/**
+ * Write a message to the debug textarea.
+ * @param {string} msg the message to display
+ */
+function db(msg)
+{
+  if (debugOn)
+    get('</span>debug<span class="literal">').value += '</span>\n<span class="literal">' + msg;
+}
+
+/**
+ * Initialize the workspace.
+ */
+function init()
+{
+  if (debugOn)
+  {
+    get('</span>db<span class="literal">').innerHTML = "&lt;form name='</span>debugForm<span class="literal">'&gt;" +
+        "&lt;textarea style='</span>position:absolute;top:26px;right:10px;<span class="literal">' id='</span>debug<span class="literal">' cols='</span>50<span class="literal">' rows='</span>10<span class="literal">'&gt;&lt;/textarea&gt;" +
+        "&lt;input type='</span>button<span class="literal">' onclick='</span>document.debugForm.debug.value=\<span class="literal">"\"</span>;<span class="literal">' value='</span>clear<span class="literal">' /&gt;" +
+        "&lt;/form&gt;";
+    get('</span>debug<span class="literal">').value = '</span><span class="literal">';
+  }
+  
+  // a hack for safari compatability
+  if (isSaf)
+  {
+    escape = myescape;
+    //unescape = myunescape;
+  }
+  
+  
+  // absolute mouse positions; modified from:
+  // http://www.web-wise-wizard.com/javascript-tutorials/javascript-mouse-event-handlers.html
+  workspace.mouse.curPos = new Point();
+  document.onmousemove = function(e)
+    {
+      var x, y;
+      if (isIE)
+      {
+        x = window.event.x+document.body.scrollLeft;
+        y = window.event.y+document.body.scrollTop;
+      }
+      else
+      {
+        x = e.pageX;
+        y = e.pageY;
+      }
+      workspace.mouse.update(x, y);
+    };
+
+  document.onkeydown = function(ev)
+    {
+      // the keydown event only seems to be a document event so we
+      // can'</span>t put the event on the div layer.  Instead, events
+<span class="comment">      // need to be passed to the note that is being hovered over.</span>
+      <span class="reserved">if</span> (isIE)
+        ev = window.event;
+      <span class="reserved">if</span> (workspace.mouse.noteOver)
+        workspace.mouse.noteOver.keyDown(ev);
+
+      <span class="reserved">if</span> (workspace.shortcuts &amp;&amp; !workspace.edit) {
+<span class="comment">        // blah, I should turn this into a map</span>
+        var key = String.fromCharCode(ev.keyCode);
+        var n;
+        <span class="reserved">if</span> (<span class="literal">'P'</span> == key &amp;&amp; ev.altKey) {
+          var note = workspace.createNote();
+          note.mouseDblClick();
+        } <span class="reserved">else</span> <span class="reserved">if</span> (<span class="literal">'S'</span> == key &amp;&amp; ev.altKey) {
+          workspace.save();
+        } <span class="reserved">else</span> <span class="reserved">if</span> (37 == ev.keyCode) { // left
+          n = workspace.notes[workspace.topId];
+          <span class="reserved">if</span> (n) n.move(new Point(-8, 0));
+        } <span class="reserved">else</span> <span class="reserved">if</span> (38 == ev.keyCode) { // up
+          n = workspace.notes[workspace.topId];
+          <span class="reserved">if</span> (n) n.move(new Point(0, -8));
+        } <span class="reserved">else</span> <span class="reserved">if</span> (39 == ev.keyCode) { // right
+          n = workspace.notes[workspace.topId];
+          <span class="reserved">if</span> (n) n.move(new Point(8, 0));
+        } <span class="reserved">else</span> <span class="reserved">if</span> (40 == ev.keyCode) { // down
+          n = workspace.notes[workspace.topId];
+          <span class="reserved">if</span> (n) n.move(new Point(0, 8));
+        } <span class="reserved">else</span> <span class="reserved">if</span> (<span class="literal">'O'</span> == key &amp;&amp; ev.altKey) {
+          n = workspace.notes[workspace.topId];
+          n.mouseDblClick();
+        } <span class="reserved">else</span> <span class="reserved">if</span> (<span class="literal">'N'</span> == key) {
+          workspace.selectNote(1);
+        } <span class="reserved">else</span> <span class="reserved">if</span> (<span class="literal">'P'</span> == key) {
+          workspace.selectNote(-1);
+        } <span class="reserved">else</span> <span class="reserved">if</span> (<span class="literal">'B'</span> == key) {
+          workspace.createNote({
+          <span class="literal">'text'</span>:<span class="literal">"This is a bookmarklet for quickly adding new notes.  Right click on the link and add it as a bookmark.  You can now quickly create a note by selecting text on any webpage and then clicking your bookmark.\n"</span>
+            + <span class="literal">"&lt;a href=\"</span>javascript:var d=document;var e=encodeURIComponent;<span class="reserved">if</span>(d.getSelection)txt=d.getSelection();<span class="reserved">if</span>(d.selection)txt=d.selection.createRange().text;location.href=<span class="literal">'" + baseURI + "load.py?name="
+            + escape(escape(escape(workspace.name))) + "&amp;via='</span>+e(location.href)+<span class="literal">'&amp;nn='</span>+e(txt);\<span class="literal">"&gt;new note&lt;/a&gt;"</span>});
+        }
+        <span class="comment">/* //not ready yet
+        else if ('E' == key)
+        {
+          workspace.expose();
+          // swap the functionality with the undo effect
+          var tmp = workspace.expose;
+          workspace.expose = workspace._expose;
+          workspace._expose = tmp;
+        }
+        */</span>
+      } <span class="reserved">else</span> <span class="reserved">if</span> (workspace.shortcuts) { // in edit mode
+        <span class="reserved">if</span> (27 == ev.keyCode) { // Esc
+          workspace.editOff();
+        }
+      }
+    };
+  
+  <span class="comment">/**
+   * When the user navigates away, if there are changes, give the user a
+   * chance to cancel.
+   */</span>
+  window.onbeforeunload = <span class="reserved">function</span>()
+    {
+      <span class="reserved">if</span> (workspace.changed &amp;&amp; workspace.name != <span class="literal">"Sample Workspace"</span>)
+      {
+        <span class="reserved">return</span> <span class="literal">"Your notes have not been saved and you may lose some information."</span>;
+      }
+    };
+
+  <span class="comment">/**
+   * If the user clicks on the background, turn of note editing.
+   */</span>
+  document.onmousedown = <span class="reserved">function</span>(ev)
+    {
+      workspace.editOff();
+    };
+  <span class="comment">/**
+   * <span class="attrib">@see</span> workspace#mouseUp
+   */</span>
+  document.onmouseup = <span class="reserved">function</span>(ev)
+    {
+      workspace.mouseUp();
+    };
+  
+  <span class="comment">/**
+   * Clean up memory leaked by bug in IE.
+   * from youngpup.net
+   */</span>
+  window.onunload = <span class="reserved">function</span>()
+    {
+      <span class="reserved">if</span> (isIE)
+      {
+        var cearElementProps = [
+            <span class="literal">'onmouseover'</span>,
+            <span class="literal">'onmouseout'</span>,
+            <span class="literal">'onmousedown'</span>,
+            <span class="literal">'onmouseup'</span>,
+            <span class="literal">'onmousemove'</span>,
+            <span class="literal">'ondblclick'</span>,
+            <span class="literal">'onclick'</span>,
+            <span class="literal">'onselectstart'</span>,
+            <span class="literal">'ondragstart'</span>,
+            <span class="literal">'onkeydown'</span>
+        ];
+        var el;
+        <span class="reserved">for</span>(var d = document.all.length;d--;){
+            el = document.all[d];
+            <span class="reserved">for</span>(var c = cearElementProps.length;c--;){
+                el[cearElementProps[c]] = null;
+            }
+        }
+      }
+    };
+<span class="comment">  
+  // periodically check for updates (every 10 minutes)</span>
+  window.setTimeout(<span class="literal">'workspace.checkUpdated()'</span>, 1000*60*10);
+}
+
+<span class="comment">/**
+ * Get the size of the browser.
+ * <span class="attrib">@type</span> Point
+ */</span>
+<span class="reserved">function</span> getPageSize()
+{
+  var ret;
+  <span class="reserved">if</span> (isIE)
+  {
+    ret = new Point(document.documentElement.clientWidth, 
+            document.documentElement.clientHeight);
+  }
+  <span class="reserved">else</span>
+    ret = new Point(window.innerWidth, window.innerHeight);
+  <span class="reserved">return</span> ret;
+}
+
+<span class="comment">/**
+ * Get a reference to an html object given the id.
+ * <span class="attrib">@param</span> {string} id id of the object
+ * <span class="attrib">@type</span> {HtmlElement}
+ */</span>
+<span class="reserved">function</span> get(id) { <span class="reserved">return</span> document.getElementById(id); }
+
+</pre>
+<!-- END SOURCECODE -->
+<HR>
+
+
+
+
+<!-- ========== START OF NAVBAR ========== -->
+<A NAME="navbar_top"><!-- --></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3">
+  <TR ALIGN="center" VALIGN="top">
+  
+  
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-summary.html"><FONT CLASS="NavBarFont1"><b>Overview</b></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev">	&nbsp;<FONT CLASS="NavBarFont1Rev"><b>File</b></FONT>&nbsp;</TD>
+  
+
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"> <FONT CLASS="NavBarFont1">Class</FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-tree.html"><FONT CLASS="NavBarFont1"><b>Tree</b></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="index-all.html"--><FONT CLASS="NavBarFont1"><b>Index</b></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="help-doc.html"><FONT CLASS="NavBarFont1"><b>Help</b></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD BGCOLOR="#EEEEFF" ALIGN="right" VALIGN="top"><EM>
+<b>Webnote</b></EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;PREV&nbsp;
+&nbsp;NEXT</FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="index.html" TARGET="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="overview-summary.html" TARGET="_top"><B>NO FRAMES</B></A>
+&nbsp;&nbsp;
+<SCRIPT>
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="allclasses-noframe.html" TARGET=""><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+<A HREF="allclasses-noframe.html" TARGET=""><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+</TABLE>
+<!-- =========== END OF NAVBAR =========== -->
+
+<hr>
+<FONT SIZE="-1">
+
+</FONT>
+<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/">JSDoc</a> on Tue May 24 23:13:22 2005</div>
+</BODY>
+</HTML>

@@ -1,0 +1,665 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Frameset//EN""http://www.w3.org/TR/REC-html40/frameset.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+ Overview
+</TITLE>
+<LINK REL ="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT>
+function asd()
+{
+parent.document.title=" Overview";
+}
+</SCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="asd();">
+
+<!-- ========== START OF NAVBAR ========== -->
+<A NAME="navbar_top"><!-- --></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3">
+  <TR ALIGN="center" VALIGN="top">
+  
+  
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-summary.html"><FONT CLASS="NavBarFont1"><b>Overview</b></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev">	&nbsp;<FONT CLASS="NavBarFont1Rev"><b>File</b></FONT>&nbsp;</TD>
+  
+
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"> 	<FONT CLASS="NavBarFont1">Class</FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-tree.html"><FONT CLASS="NavBarFont1"><b>Tree</b></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="index-all.html"--><FONT CLASS="NavBarFont1"><b>Index</b></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="help-doc.html"><FONT CLASS="NavBarFont1"><b>Help</b></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD BGCOLOR="#EEEEFF" ALIGN="right" VALIGN="top">
+<EM>
+<b></b></EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;PREV&nbsp;
+&nbsp;NEXT</FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="index.html" TARGET="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="overview-summary.html" TARGET="_top"><B>NO FRAMES</B></A>
+&nbsp;&nbsp;
+<SCRIPT>
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="allclasses-noframe.html" TARGET=""><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+<A HREF="allclasses-noframe.html" TARGET=""><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+</TABLE>
+<!-- =========== END OF NAVBAR =========== -->
+
+<HR>
+<CENTER>
+
+   <H2>test.js</H2>
+
+</CENTER>
+<table>
+	<tr>
+		<td valign="top">
+                        
+                            
+                        
+			
+			<h4>Summary</h4>
+			<p>
+                        
+                           This file is to be used for testing the JSDoc parser  It is not intended to be an example of good JavaScript OO-programming,  nor is it intended to fulfill any specific purpose apart from   demonstrating the functionality of the   <a href='http://sourceforge.net/projects/jsdoc'>JSDoc</a> parser   <BR/><BR/><B>Author:</B> Gabriel Reid gab_reid@users.sourceforge.net  <BR/><B>Version: </B>0.1<BR/><BR/>
+                           
+			</p>
+		</td>
+	</tr>
+</table>
+
+<HR>
+
+
+
+
+<!-- START SOURCECODE -->
+<pre class="sourceview">
+<span class="comment">/** 
+ * <span class="attrib">@fileoverview</span> This file is to be used for testing the JSDoc parser
+ * It is not intended to be an example of good JavaScript OO-programming,
+ * nor is it intended to fulfill any specific purpose apart from 
+ * demonstrating the functionality of the 
+ * &lt;a href='http://sourceforge.net/projects/jsdoc'&gt;JSDoc&lt;/a&gt; parser
+ *
+ * <span class="attrib">@author</span> Gabriel Reid gab_reid<span class="attrib">@users</span>.sourceforge.net
+ * <span class="attrib">@version</span> 0.1 
+ */</span>
+
+
+<span class="comment">/**
+ * Construct a new Shape object.
+ * <span class="attrib">@class</span> This is the basic Shape class.  
+ * It can be considered an abstract class, even though no such thing
+ * really existing in JavaScript
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@throws</span> MemoryException if there is no more memory 
+ * <span class="attrib">@throws</span> GeneralShapeException rarely (if ever)
+ * <span class="attrib">@return</span> A new shape
+ */</span>
+<span class="reserved">function</span> Shape(){
+  
+   <span class="comment">/**
+    * This is an example of a function that is not given as a property
+    * of a prototype, but instead it is assigned within a constructor.
+    * For inner functions like this to be picked up by the parser, the
+    * function that acts as a constructor &lt;b&gt;must&lt;/b&gt; be denoted with
+    * the &lt;b&gt;&amp;#64;constructor&lt;/b&gt; tag in its comment.
+    * <span class="attrib">@type</span> String
+    */</span>
+   <span class="reserved">this</span>.getClassName = <span class="reserved">function</span>(){
+      <span class="reserved">return</span> <span class="literal">"Shape"</span>;
+   }
+
+   <span class="comment">/** 
+    * This is a private method, just used here as an example 
+    */</span>
+   <span class="reserved">function</span> addReference(){
+<span class="comment">       // Do nothing...</span>
+   }
+   
+}
+
+<span class="comment">/**
+ * Create a new Hexagon instance.
+ * <span class="attrib">@extends</span> Shape
+ * <span class="attrib">@class</span> Hexagon is a class that is a &lt;i&gt;logical&lt;/i&gt; sublcass of 
+ * &lt;a href="Shape.html#"&gt;Shape&lt;/a&gt; (thanks to the &lt;code&gt;&amp;#64;extends&lt;/code&gt; tag), but in 
+ * reality it is completely unrelated to Shape.
+ * <span class="attrib">@param</span> {int} sideLength The length of one side for the new Hexagon
+ */</span>
+<span class="reserved">function</span> Hexagon(sideLength) {
+}
+
+
+<span class="comment">/**
+ * This is an unattached (static) function that adds two integers together.
+ * <span class="attrib">@param</span> {int} One The first number to add 
+ * <span class="attrib">@param</span> {int http://jsdoc.sourceforge.net/} Two The second number to add 
+ * <span class="attrib">@author</span> Gabriel Reid
+ * <span class="attrib">@deprecated</span> So you shouldn't use it anymore!
+ */</span>
+<span class="reserved">function</span> Add(One, Two){
+    <span class="reserved">return</span> One + Two;
+}
+
+
+<span class="comment">/**
+ * The color of this shape
+ * <span class="attrib">@type</span> Color
+ */</span>
+Shape.<span class="reserved">prototype</span>.color = null;
+
+<span class="comment">/**
+ * The border of this shape. 
+ * <span class="attrib">@type</span> int
+ */</span>
+Shape.<span class="reserved">prototype</span>.border = null;
+
+<span class="comment">/* 
+ * The assignment of function implementations for Shape, documentation will
+ * be taken over from the method declaration.
+ */</span>
+
+Shape.<span class="reserved">prototype</span>.getCoords = Shape_GetCoords;
+
+Shape.<span class="reserved">prototype</span>.getColor = Shape_GetColor;
+
+Shape.<span class="reserved">prototype</span>.setCoords = Shape_SetCoords;
+
+Shape.<span class="reserved">prototype</span>.setColor = Shape_SetColor;
+
+<span class="comment">/*
+ * These are all the instance method implementations for Shape
+ */</span>
+
+<span class="comment">/**
+ * Get the coordinates of this shape. It is assumed that we're always talking
+ * about shapes in a 2D location here.
+ * <span class="attrib">@requires</span> Shape The shape class
+ * <span class="attrib">@returns</span> A Coordinate object representing the location of this Shape
+ * <span class="attrib">@type</span> Coordinate
+ */</span>
+<span class="reserved">function</span> Shape_GetCoords(){
+   <span class="reserved">return</span> <span class="reserved">this</span>.coords;
+}
+
+<span class="comment">/**
+ * Get the color of this shape.
+ * <span class="attrib">@see</span> #setColor
+ * <span class="attrib">@type</span> Color
+ */</span>
+<span class="reserved">function</span> Shape_GetColor(){
+   <span class="reserved">return</span> <span class="reserved">this</span>.color;
+}
+
+<span class="comment">/**
+ * Set the coordinates for this Shape
+ * <span class="attrib">@param</span> {Coordinate} coordinates The coordinates to set for this Shape
+ */</span>
+<span class="reserved">function</span> Shape_SetCoords(coordinates){
+   <span class="reserved">this</span>.coords = coordinates;
+}
+
+<span class="comment">/**
+ * Set the color for this Shape
+ * <span class="attrib">@param</span> {Color} color The color to set for this Shape
+ * <span class="attrib">@param</span> other There is no other param, but it can still be documented if
+ *              optional parameters are used
+ * <span class="attrib">@throws</span> NonExistantColorException (no, not really!)
+ * <span class="attrib">@see</span> #setColor
+ */</span>
+<span class="reserved">function</span> Shape_SetColor(color){
+   <span class="reserved">this</span>.color = color;
+}
+
+<span class="comment">/**
+ * Clone this shape
+ * <span class="attrib">@returns</span> A copy of this shape
+ * <span class="attrib">@type</span> Shape
+ * <span class="attrib">@author</span> Gabriel Reid
+ */</span>
+Shape.<span class="reserved">prototype</span>.clone = <span class="reserved">function</span>(){
+   <span class="reserved">return</span> new Shape();
+}
+
+<span class="comment">/**
+ * Create a new Rectangle instance. 
+ * <span class="attrib">@class</span> A basic rectangle class, inherits from Shape.
+ * This class could be considered a concrete implementation class
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@param</span> {int} width The optional width for this Rectangle
+ * <span class="attrib">@param</span> {int} height Thie optional height for this Rectangle
+ * <span class="attrib">@author</span> Gabriel Reid
+ * <span class="attrib">@see</span> Shape Shape is the base class for this
+ */</span>
+<span class="reserved">function</span> Rectangle(width, // This is the width 
+                  height // This is the height
+                  ){
+   <span class="reserved">if</span> (width){
+      <span class="reserved">this</span>.width = width;
+      <span class="reserved">if</span> (height){
+	 <span class="reserved">this</span>.height = height;
+      }
+   }
+}
+
+
+<span class="comment">/* Inherit from Shape */</span>
+Rectangle.<span class="reserved">prototype</span> = new Shape();
+
+<span class="comment">/**
+ * Value to represent the width of the Rectangle.
+ * &lt;br&gt;Text in &lt;b&gt;bold&lt;/b&gt; and &lt;i&gt;italic&lt;/i&gt; and a 
+ * link to &lt;a href="http://sf.net"&gt;SourceForge&lt;/a&gt;
+ * <span class="attrib">@private</span>
+ * <span class="attrib">@type</span> int
+ */</span>
+Rectangle.<span class="reserved">prototype</span>.width = 0;
+
+<span class="comment">/**
+ * Value to represent the height of the Rectangle
+ * <span class="attrib">@private</span>
+ * <span class="attrib">@type</span> int
+ */</span>
+Rectangle.<span class="reserved">prototype</span>.height = 0;
+
+<span class="comment">/**
+ * Get the type of this object. 
+ * <span class="attrib">@type</span> String
+ */</span>
+Rectangle.<span class="reserved">prototype</span>.getClassName= <span class="reserved">function</span>(){
+    <span class="reserved">return</span> <span class="literal">"Rectangle"</span>;
+}
+
+<span class="comment">/*
+ * These are all the instance method implementations for Rectangle 
+ */</span>
+
+Rectangle.<span class="reserved">prototype</span>.getWidth = Rectangle_GetWidth;
+
+Rectangle.<span class="reserved">prototype</span>.getHeight = Rectangle_GetHeight;
+
+Rectangle.<span class="reserved">prototype</span>.setWidth = Rectangle_SetWidth;
+
+Rectangle.<span class="reserved">prototype</span>.setHeight = Rectangle_SetHeight;
+
+Rectangle.<span class="reserved">prototype</span>.getArea = Rectangle_GetArea;
+
+
+<span class="comment">/**
+ * Get the value of the width for the Rectangle
+ * <span class="attrib">@type</span> int
+ * <span class="attrib">@see</span> #setWidth
+ */</span>
+<span class="reserved">function</span> Rectangle_GetWidth(){
+   <span class="reserved">return</span> <span class="reserved">this</span>.width;
+}
+
+<span class="comment">/**
+ * Get the value of the height for the Rectangle.
+ * Another getter is the &lt;a href="Shape.html#getColor"&gt;Shape.getColor()&lt;/a&gt; method in the 
+ * &lt;a href="Shape.html#"&gt;base Shape class&lt;/a&gt;.  
+ * <span class="attrib">@return</span> The height of this Rectangle
+ * <span class="attrib">@type</span> int
+ * <span class="attrib">@see</span> #setHeight
+ */</span>
+<span class="reserved">function</span> Rectangle_GetHeight(){
+    <span class="reserved">return</span> <span class="reserved">this</span>.height;
+}
+
+<span class="comment">/**
+ * Set the width value for this Rectangle.
+ * <span class="attrib">@param</span> {int} width The width value to be set
+ * <span class="attrib">@see</span> #setWidth
+ */</span>
+<span class="reserved">function</span> Rectangle_SetWidth(width){
+   <span class="reserved">this</span>.width = width;
+}
+
+<span class="comment">/**
+ * Set the height value for this Rectangle.
+ * <span class="attrib">@param</span> {int} height The height value to be set
+ * <span class="attrib">@see</span> #getHeight
+ */</span>
+<span class="reserved">function</span> Rectangle_SetHeight(height){
+   <span class="reserved">this</span>.height = height;
+}
+
+<span class="comment">/**
+ * Get the value for the total area of this Rectangle
+ * <span class="attrib">@return</span> total area of this Rectangle
+ * <span class="attrib">@type</span> int
+ */</span>
+<span class="reserved">function</span> Rectangle_GetArea(){
+   <span class="reserved">return</span> width * height;
+}
+
+
+<span class="comment">/**
+ * Create a new Square instance.
+ * <span class="attrib">@class</span> A Square is a subclass of &lt;a href="Rectangle.html#"&gt;Rectangle&lt;/a&gt;
+ * <span class="attrib">@param</span> {int} width The optional width for this Rectangle
+ * <span class="attrib">@param</span> {int} height The optional height for this Rectangle
+ */</span>
+<span class="reserved">function</span> Square(width, height){
+   <span class="reserved">if</span> (width){
+      <span class="reserved">this</span>.width = width;
+      <span class="reserved">if</span> (height){
+	 <span class="reserved">this</span>.height = height;
+      }
+   } 
+   
+}
+
+<span class="comment">/* Square is a subclass of Rectangle */</span>
+Square.<span class="reserved">prototype</span> = new Rectangle();
+
+
+<span class="comment">/*
+ * The assignment of function implementation for Shape.
+ */</span>
+Square.<span class="reserved">prototype</span>.setWidth = Square_SetWidth;
+
+Square.<span class="reserved">prototype</span>.setHeight = Square_SetHeight;
+
+
+
+<span class="comment">/**
+ * Set the width value for this Square.
+ * <span class="attrib">@param</span> {int} width The width value to be set
+ * <span class="attrib">@see</span> #getWidth
+ */</span>
+<span class="reserved">function</span> Square_SetWidth(width){
+   <span class="reserved">this</span>.width = <span class="reserved">this</span>.height = width;
+}
+
+<span class="comment">/**
+ * Set the height value for this Square 
+ * Sets the &lt;a href="Rectangle.html#height"&gt;height&lt;/a&gt; attribute in the Rectangle.
+ * <span class="attrib">@param</span> {int} height The height value to be set
+ */</span>
+<span class="reserved">function</span> Square_SetHeight(height){
+   <span class="reserved">this</span>.height = <span class="reserved">this</span>.width = height;
+}
+
+
+<span class="comment">/**
+ * Create a new Circle instance based on a radius.
+ * <span class="attrib">@class</span> Circle class is another subclass of Shape
+ * <span class="attrib">@param</span> {int} radius The optional radius of this Circle
+ */</span>
+<span class="reserved">function</span> Circle(radius){
+   <span class="reserved">if</span> (radius){
+      <span class="reserved">this</span>.radius = radius;
+   }
+}
+
+<span class="comment">/* Circle inherits from Shape */</span>
+Circle.<span class="reserved">prototype</span> = new Shape();
+
+<span class="comment">/** 
+ * The radius value for this Circle 
+ * <span class="attrib">@private</span>
+ * <span class="attrib">@type</span> int
+ */</span>
+Circle.<span class="reserved">prototype</span>.radius = 0;
+
+<span class="comment">/** 
+ * A very simple class (static) field that is also a constant
+ * <span class="attrib">@final</span>
+ * <span class="attrib">@type</span> float
+ */</span>
+Circle.PI = 3.14;
+
+Circle.createCircle = Circle_CreateCircle;
+
+Circle.<span class="reserved">prototype</span>.getRadius = Circle_GetRadius;
+
+Circle.<span class="reserved">prototype</span>.setRadius = Circle_SetRadius;
+
+<span class="comment">/**
+ * Get the radius value for this Circle
+ * <span class="attrib">@type</span> int
+ * <span class="attrib">@see</span> #setRadius
+ */</span>
+<span class="reserved">function</span> Circle_GetRadius(){
+   <span class="reserved">return</span> <span class="reserved">this</span>.radius;
+}
+
+<span class="comment">/** 
+ * Set the radius value for this Circle
+ * <span class="attrib">@param</span> {int} radius The radius value to set
+ * <span class="attrib">@see</span> #getRadius
+ */</span>
+<span class="reserved">function</span> Circle_SetRadius(radius){
+   <span class="reserved">this</span>.radius = radius;
+}
+
+<span class="comment">/** 
+ * An example of a  class (static) method that acts as a factory for Circle
+ * objects. Given a radius value, this method creates a new Circle.
+ * <span class="attrib">@param</span> {int} radius The radius value to use for the new Circle.
+ * <span class="attrib">@type</span> Circle
+ */</span>
+<span class="reserved">function</span> Circle_CreateCircle(radius){
+    <span class="reserved">return</span> new Circle(radius);
+}
+
+
+<span class="comment">/**
+ * Create a new Coordinate instance based on x and y grid data.
+ * <span class="attrib">@class</span> Coordinate is a class that can encapsulate location information.
+ * <span class="attrib">@param</span> {int} x The optional x portion of the Coordinate
+ * <span class="attrib">@param</span> {int} y The optinal y portion of the Coordinate
+ */</span>
+<span class="reserved">function</span> Coordinate(x, y){
+   <span class="reserved">if</span> (x){
+      <span class="reserved">this</span>.x = x;
+      <span class="reserved">if</span> (y){
+	 <span class="reserved">this</span>.y = y;
+      }
+   }
+}
+
+<span class="comment">/** 
+ * The x portion of the Coordinate 
+ * <span class="attrib">@type</span> int
+ * <span class="attrib">@see</span> #getX
+ * <span class="attrib">@see</span> #setX
+ */</span>
+Coordinate.<span class="reserved">prototype</span>.x = 0;
+
+<span class="comment">/** 
+ * The y portion of the Coordinate 
+ * <span class="attrib">@type</span> int
+ * <span class="attrib">@see</span> #getY
+ * <span class="attrib">@see</span> #setY
+ */</span>
+Coordinate.<span class="reserved">prototype</span>.y = 0;
+
+Coordinate.<span class="reserved">prototype</span>.getX = Coordinate_GetX;
+Coordinate.<span class="reserved">prototype</span>.getY = Coordinate_GetY;
+Coordinate.<span class="reserved">prototype</span>.setX = Coordinate_SetX;
+Coordinate.<span class="reserved">prototype</span>.setY = Coordinate_SetY;
+
+<span class="comment">/**
+ * Gets the x portion of the Coordinate.
+ * <span class="attrib">@type</span> int
+ * <span class="attrib">@see</span> #setX
+ */</span>
+<span class="reserved">function</span> Coordinate_GetX(){
+   <span class="reserved">return</span> <span class="reserved">this</span>.x;
+}
+
+<span class="comment">/** 
+ * Get the y portion of the Coordinate.
+ * <span class="attrib">@type</span> int
+ * <span class="attrib">@see</span> #setY
+ */</span>
+<span class="reserved">function</span> Coordinate_GetY(){
+   <span class="reserved">return</span> <span class="reserved">this</span>.y;
+}
+
+<span class="comment">/**
+ * Sets the x portion of the Coordinate.
+ * <span class="attrib">@param</span> {int} x The x value to set
+ * <span class="attrib">@see</span> #getX
+ */</span>
+<span class="reserved">function</span> Coordinate_SetX(x){
+   <span class="reserved">this</span>.x = x;
+}
+
+<span class="comment">/** 
+ * Sets the y portion of the Coordinate.
+ * <span class="attrib">@param</span> {int} y The y value to set
+ * <span class="attrib">@see</span> #getY
+ */</span>
+<span class="reserved">function</span> Coordinate_SetY(y){
+   <span class="reserved">this</span>.y = y;
+}
+
+<span class="comment">/**
+ * <span class="attrib">@class</span> This class exists to demonstrate the assignment of a class prototype
+ * as an anonymous block.
+ */</span>
+<span class="reserved">function</span> ShapeFactory(){
+}
+
+ShapeFactory.<span class="reserved">prototype</span> = {
+   <span class="comment">/** 
+    * Creates a new &lt;a href="Shape.html#"&gt;Shape&lt;/a&gt; instance.
+    * <span class="attrib">@return</span> A new &lt;a href="Shape.html#"&gt;Shape&lt;/a&gt;
+    * <span class="attrib">@type</span> Shape
+    */</span>
+   createShape: <span class="reserved">function</span>(){
+      <span class="reserved">return</span> new Shape();
+   }
+}
+
+<span class="comment">/**
+ * An example of a singleton class
+ */</span>
+MySingletonShapeFactory = new <span class="reserved">function</span>(){
+
+   <span class="comment">/**
+    * Get the next &lt;a href="Shape.html#"&gt;Shape&lt;/a&gt; 
+    * <span class="attrib">@type</span> Shape
+    * <span class="attrib">@return</span> A new &lt;a href="Shape.html#"&gt;Shape&lt;/a&gt;
+    */</span>
+   <span class="reserved">this</span>.getShape = <span class="reserved">function</span>(){ 
+      <span class="reserved">return</span> null; 
+   }
+
+}
+
+
+<span class="comment">/** 
+ * Create a new Foo instance.
+ * <span class="attrib">@class</span> This is the Foo class. It exists to demonstrate 'nested' classes.
+ * <span class="attrib">@constructor</span> 
+ * <span class="attrib">@see</span> Foo.Bar
+ */</span>
+<span class="reserved">function</span> Foo(){}
+
+<span class="comment">/** 
+ * Creates a new instance of Bar.
+ * <span class="attrib">@class</span> This class exists to demonstrate 'nested' classes.
+ * <span class="attrib">@constructor</span> 
+ * <span class="attrib">@see</span> Foo.Bar
+ */</span>
+<span class="reserved">function</span> Bar(){}
+
+<span class="comment">/** 
+ * Nested class
+ * <span class="attrib">@constructor</span> 
+ */</span>
+Foo.Bar = <span class="reserved">function</span>(){<span class="reserved">this</span>.x = 2;}
+
+Foo.Bar.<span class="reserved">prototype</span> = new Bar();
+
+Foo.Bar.<span class="reserved">prototype</span>.y = <span class="literal">'3'</span>;
+
+
+</pre>
+<!-- END SOURCECODE -->
+<HR>
+
+
+
+
+<!-- ========== START OF NAVBAR ========== -->
+<A NAME="navbar_top"><!-- --></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3">
+  <TR ALIGN="center" VALIGN="top">
+  
+  
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-summary.html"><FONT CLASS="NavBarFont1"><b>Overview</b></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev">	&nbsp;<FONT CLASS="NavBarFont1Rev"><b>File</b></FONT>&nbsp;</TD>
+  
+
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"> <FONT CLASS="NavBarFont1">Class</FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-tree.html"><FONT CLASS="NavBarFont1"><b>Tree</b></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="index-all.html"--><FONT CLASS="NavBarFont1"><b>Index</b></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="help-doc.html"><FONT CLASS="NavBarFont1"><b>Help</b></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD BGCOLOR="#EEEEFF" ALIGN="right" VALIGN="top"><EM>
+<b></b></EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;PREV&nbsp;
+&nbsp;NEXT</FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="index.html" TARGET="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="overview-summary.html" TARGET="_top"><B>NO FRAMES</B></A>
+&nbsp;&nbsp;
+<SCRIPT>
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="allclasses-noframe.html" TARGET=""><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+<A HREF="allclasses-noframe.html" TARGET=""><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+</TABLE>
+<!-- =========== END OF NAVBAR =========== -->
+
+<hr>
+<FONT SIZE="-1">
+
+</FONT>
+<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/">JSDoc</a> on Fri Dec 24 12:22:46 2004</div>
+</BODY>
+</HTML>

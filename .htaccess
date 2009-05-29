@@ -1,0 +1,19 @@
+AddHandler cgi-script .py
+Options +ExecCGI +MultiViews
+
+<FilesMatch "webnotelog$">
+  order deny,allow
+  deny from all
+</FilesMatch>
+
+RewriteEngine On
+# WARNING: this rule will cause an infinite loop if you rename
+# index.old.html to index.html
+RewriteRule index\.html /webnote [R=301,L]
+RewriteRule (.*)/index\.xml rss.py?name=$1 [L]
+RewriteRule (.*)\.xml rss.py?name=$1 [L]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule (.*) load.py?name=$1 [NE,L]
+
+AddEncoding x-gzip gz

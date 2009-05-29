@@ -1,0 +1,547 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Frameset//EN""http://www.w3.org/TR/REC-html40/frameset.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+Webnote Overview
+</TITLE>
+<LINK REL ="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT>
+function asd()
+{
+parent.document.title=" Overview";
+}
+</SCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="asd();">
+
+<!-- ========== START OF NAVBAR ========== -->
+<A NAME="navbar_top"><!-- --></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3">
+  <TR ALIGN="center" VALIGN="top">
+  
+  
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-summary.html"><FONT CLASS="NavBarFont1"><b>Overview</b></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev">	&nbsp;<FONT CLASS="NavBarFont1Rev"><b>File</b></FONT>&nbsp;</TD>
+  
+
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"> 	<FONT CLASS="NavBarFont1">Class</FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-tree.html"><FONT CLASS="NavBarFont1"><b>Tree</b></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="index-all.html"--><FONT CLASS="NavBarFont1"><b>Index</b></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="help-doc.html"><FONT CLASS="NavBarFont1"><b>Help</b></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD BGCOLOR="#EEEEFF" ALIGN="right" VALIGN="top">
+<EM>
+<b>Webnote</b></EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;PREV&nbsp;
+&nbsp;NEXT</FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="index.html" TARGET="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="overview-summary.html" TARGET="_top"><B>NO FRAMES</B></A>
+&nbsp;&nbsp;
+<SCRIPT>
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="allclasses-noframe.html" TARGET=""><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+<A HREF="allclasses-noframe.html" TARGET=""><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+</TABLE>
+<!-- =========== END OF NAVBAR =========== -->
+
+<HR>
+<CENTER>
+
+   <H2>objects.js</H2>
+
+</CENTER>
+<table>
+	<tr>
+		<td valign="top">
+                        
+                            
+                        
+			
+			<h4>Summary</h4>
+			<p>
+                        
+                           A few generic objects and functions used by webnote.<BR/><BR/>
+                           
+			</p>
+		</td>
+	</tr>
+</table>
+
+<HR>
+
+
+
+
+<!-- START SOURCECODE -->
+<pre class="sourceview">
+<span class="comment">/**
+ * <span class="attrib">@fileoverview</span> A few generic objects and functions used by webnote.
+ */</span>
+<span class="comment">
+///</span>
+<span class="comment">/// global methods</span>
+<span class="comment">///</span>
+var hex2dec = <span class="reserved">function</span>(h) { <span class="reserved">return</span> parseInt(h, 16); };
+var dec2hex = <span class="reserved">function</span>(d)
+{
+  var ret = d.toString(16);
+  <span class="reserved">while</span> (ret.length &lt; 2)
+    ret = <span class="literal">'0'</span> + ret;
+  <span class="reserved">return</span> ret;
+};
+
+var getxmlreqobj = <span class="reserved">function</span>() {
+  var xmlobj;
+  try { xmlobj = new ActiveXObject(<span class="literal">"Msxml2.XMLHTTP"</span>); }
+  catch (e) {
+    try { xmlobj = new XMLHttpRequest(); }
+    catch (e) { alert(<span class="literal">"Your browser doesn't support xmlhttprequest.  Unable to save."</span>); }
+  }
+  <span class="reserved">return</span> xmlobj;
+};
+
+String.<span class="reserved">prototype</span>.trim = <span class="reserved">function</span>() {
+  <span class="reserved">return</span> <span class="reserved">this</span>.replace(/^\s+/, <span class="literal">''</span>).replace(/\s+$/, <span class="literal">''</span>);
+}
+
+<span class="comment">/**
+ * modified from http://www.quirksmode.org/js/findpos.html
+ * to return a Point()
+ */</span>
+<span class="reserved">function</span> findPos(obj)
+{
+  var cur = new Point();
+  <span class="reserved">if</span> (obj.offsetParent)
+  {
+    <span class="reserved">while</span> (obj.offsetParent)
+    {
+      cur.x += obj.offsetLeft;
+      cur.y += obj.offsetTop;
+      obj = obj.offsetParent;
+    }
+  }
+  <span class="reserved">else</span> <span class="reserved">if</span> (obj.x)
+  {
+    cur.x += obj.x;
+    cur.y += obj.y;
+  }
+  <span class="reserved">return</span> cur;
+}
+<span class="comment">
+///</span>
+<span class="comment">/// generic objects</span>
+<span class="comment">///</span>
+
+<span class="comment">/**
+ * Create a new Point object
+ * <span class="attrib">@class</span> A class representing two numbers, x and y.
+ * <span class="attrib">@param</span> {int} x optional parameter for x
+ * <span class="attrib">@param</span> {int} y optional parameter for y
+ * <span class="attrib">@constructor</span>
+ */</span>
+<span class="reserved">function</span> Point(x, y)
+{
+  <span class="comment">/**
+   * <span class="attrib">@type</span> int
+   */</span>
+  <span class="reserved">this</span>.x = x ? x : 0;
+  <span class="comment">/**
+   * <span class="attrib">@type</span> int
+   */</span>
+  <span class="reserved">this</span>.y = y ? y : 0;
+}
+<span class="comment">/**
+ * Add two points together and return a new Point object.
+ * <span class="attrib">@param</span> {Point} rhs The point object to add.
+ * <span class="attrib">@return</span> a new point object
+ * <span class="attrib">@type</span> Point
+ */</span>
+Point.<span class="reserved">prototype</span>.add = <span class="reserved">function</span>(rhs) { <span class="reserved">return</span> new Point(<span class="reserved">this</span>.x + rhs.x, <span class="reserved">this</span>.y + rhs.y); };
+<span class="comment">/**
+ * Subtract the input point from the object and return a new Point object.
+ * <span class="attrib">@param</span> {Point} rhs The point to subtract.
+ * <span class="attrib">@return</span> a new point object
+ * <span class="attrib">@type</span> Point
+ */</span>
+Point.<span class="reserved">prototype</span>.sub = <span class="reserved">function</span>(rhs) { <span class="reserved">return</span> new Point(<span class="reserved">this</span>.x - rhs.x, <span class="reserved">this</span>.y - rhs.y); };
+<span class="comment">/**
+ * Divide x and y by the input value.
+ * <span class="attrib">@param</span> {int} n a number to divide by
+ * <span class="attrib">@return</span> a new point object
+ * <span class="attrib">@type</span> Point
+ */</span>
+Point.<span class="reserved">prototype</span>.div = <span class="reserved">function</span>(n) { <span class="reserved">return</span> new Point(<span class="reserved">this</span>.x/n, <span class="reserved">this</span>.y/n); };
+<span class="comment">/**
+ * Make a copy of the Point object.
+ * <span class="attrib">@return</span> a new point object
+ * <span class="attrib">@type</span> Point
+ */</span>
+Point.<span class="reserved">prototype</span>.copy = <span class="reserved">function</span>() { <span class="reserved">return</span> new Point(<span class="reserved">this</span>.x, <span class="reserved">this</span>.y); };
+<span class="comment">/**
+ * Determines if two points have the samve x and y values, respectively.
+ * <span class="attrib">@param</span> {Point} rhs the point to compare
+ * <span class="attrib">@type</span> boolean
+ */</span>
+Point.<span class="reserved">prototype</span>.equals = <span class="reserved">function</span>(rhs) { <span class="reserved">return</span> <span class="reserved">this</span>.x == rhs.x &amp;&amp; <span class="reserved">this</span>.y == rhs.y; };
+<span class="comment">/**
+ * A string representation of a point.
+ * <span class="attrib">@return</span> E.g., "(1, 2)"
+ * <span class="attrib">@type</span> String
+ */</span>
+Point.<span class="reserved">prototype</span>.toString = <span class="reserved">function</span>() { <span class="reserved">return</span> <span class="literal">'('</span> + <span class="reserved">this</span>.x + <span class="literal">', '</span> + <span class="reserved">this</span>.y + <span class="literal">')'</span>; };
+
+
+<span class="comment">/**
+ * Create a new object to represent a color in HSV.
+ * <span class="attrib">@class</span> A class representing a color as HSV values.
+ * <span class="attrib">@param</span> {Color} rgb A Color object (RGB) to convert to HSV.
+ * <span class="attrib">@constructor</span>
+ */</span>
+<span class="reserved">function</span> ColorHSV(rgb)
+{
+  var r = rgb.r / 255.0; var g = rgb.g / 255.0; var b = rgb.b / 255.0;
+  
+  var min = Math.min(r, g, b); var max = Math.max(r, g, b);
+  <span class="reserved">this</span>.v = max;
+  var delta = max - min;
+  <span class="reserved">if</span> (0 == max) // r == g == b == 0
+  {
+    <span class="reserved">this</span>.s = 0;
+    <span class="reserved">this</span>.h = -1;
+  }
+  <span class="reserved">else</span>
+  {
+    <span class="reserved">this</span>.s = delta / max;
+    <span class="reserved">if</span> (r == max)
+      <span class="reserved">this</span>.h = (g - b) / delta;
+    <span class="reserved">else</span> <span class="reserved">if</span> (g == max)
+      <span class="reserved">this</span>.h = 2 + (b - r) / delta;
+    <span class="reserved">else</span>
+      <span class="reserved">this</span>.h = 4 + (r - g) / delta;
+    <span class="reserved">this</span>.h *= 60.0;
+    <span class="reserved">if</span> (!<span class="reserved">this</span>.h) // shades of grey have no value
+      <span class="reserved">this</span>.h = 0;
+    <span class="reserved">if</span> (<span class="reserved">this</span>.h &lt; 0)
+      <span class="reserved">this</span>.h += 360.0;
+  }
+}
+<span class="comment">/**
+ * A pretty way to write out the value of a HSV point.
+ * <span class="attrib">@type</span> String
+ */</span>
+ColorHSV.<span class="reserved">prototype</span>.toString = <span class="reserved">function</span>()
+{
+  <span class="reserved">return</span> <span class="literal">'('</span> + <span class="reserved">this</span>.h + <span class="literal">', '</span> + <span class="reserved">this</span>.s + <span class="literal">', '</span> + <span class="reserved">this</span>.v + <span class="literal">')'</span>;
+};
+<span class="comment">/**
+ * Convert the HSV value to RGB and return a Color object.
+ * <span class="attrib">@type</span> Color
+ */</span>
+ColorHSV.<span class="reserved">prototype</span>.toColor = <span class="reserved">function</span>()
+{
+  var ret = new Color(<span class="literal">'000000'</span>);
+  <span class="reserved">if</span> (0 == <span class="reserved">this</span>.s)
+  {
+    ret.r = ret.g = ret.b = parseInt(<span class="reserved">this</span>.v*255.0);
+    <span class="reserved">return</span> ret;
+  }
+  var h = <span class="reserved">this</span>.h / 60.0;
+  var i = Math.floor(h);
+  var f = h - i;
+  var p = <span class="reserved">this</span>.v * (1.0 - <span class="reserved">this</span>.s);
+  var q = <span class="reserved">this</span>.v * (1.0 - <span class="reserved">this</span>.s * f);
+  var t = <span class="reserved">this</span>.v * (1.0 - <span class="reserved">this</span>.s * (1 - f));
+  switch (i)
+  {
+    case 0: ret.r = <span class="reserved">this</span>.v; ret.g = t; ret.b = p; break;
+    case 1: ret.r = q; ret.g = <span class="reserved">this</span>.v; ret.b = p; break;
+    case 2: ret.r = p; ret.g = <span class="reserved">this</span>.v; ret.b = t; break;
+    case 3: ret.r = p; ret.g = q; ret.b = <span class="reserved">this</span>.v; break;
+    case 4: ret.r = t; ret.g = p; ret.b = <span class="reserved">this</span>.v; break;
+    case 5: ret.r = <span class="reserved">this</span>.v; ret.g = p; ret.b = q; break;
+    default:
+      db(<span class="literal">'error coverting from hsv to rgb'</span>);
+  }
+  ret.r = parseInt(ret.r*255.0);
+  ret.g = parseInt(ret.g*255.0);
+  ret.b = parseInt(ret.b*255.0);
+  <span class="reserved">return</span> ret;
+};
+<span class="comment">/**
+ * Adjust the HSV values of the object.  Returns a reference to the same
+ * object.
+ * <span class="attrib">@param</span> {int} h hue adjustment
+ * <span class="attrib">@param</span> {int} s saturation adjustment
+ * <span class="attrib">@param</span> {int} v luminance adjustment
+ * <span class="attrib">@type</span> ColorHSV
+ */</span>
+ColorHSV.<span class="reserved">prototype</span>.adj = <span class="reserved">function</span>(h, s, v)
+{
+  <span class="reserved">this</span>.h += h; <span class="reserved">this</span>.s += s; <span class="reserved">this</span>.v += v;
+  
+  <span class="reserved">if</span> (h &lt; 0)
+    h += 360.0;
+  <span class="reserved">if</span> (h &gt; 360)
+    h -= 360.0;
+  <span class="reserved">this</span>.s = Math.min(1.0, <span class="reserved">this</span>.s); <span class="reserved">this</span>.s = Math.max(0.0, <span class="reserved">this</span>.s);
+  <span class="reserved">this</span>.v = Math.min(1.0, <span class="reserved">this</span>.v); <span class="reserved">this</span>.v = Math.max(0.0, <span class="reserved">this</span>.v);
+  <span class="reserved">return</span> <span class="reserved">this</span>;
+};
+
+
+<span class="comment">/**
+ * Create a new object to represent a color as RGB values.
+ * <span class="attrib">@class</span> A class representing a color as RGB values.
+ * <span class="attrib">@param</span> {String} value A string representing the color.  It can be in any
+ * of the following formats: rgb(##, ##, ##), #ffffff, or ffffff
+ * <span class="attrib">@constructor</span>
+ */</span>
+<span class="reserved">function</span> Color(value)
+{
+<span class="comment">  // constuctor creates object from a string</span>
+<span class="comment">  // I keep all values in decimal</span>
+  <span class="reserved">if</span> (value.charAt(0) == <span class="literal">'r'</span>)
+  {
+    <span class="comment">/**
+     * <span class="attrib">@type</span> int
+     */</span>
+    <span class="reserved">this</span>.r = parseInt(value.substring(4));
+    var pos = value.indexOf(<span class="literal">','</span>);
+    <span class="comment">/**
+     * <span class="attrib">@type</span> int
+     */</span>
+    <span class="reserved">this</span>.g = parseInt(value.substring(pos+1));
+    pos = value.indexOf(<span class="literal">','</span>, pos+1);
+    <span class="comment">/**
+     * <span class="attrib">@type</span> int
+     */</span>
+    <span class="reserved">this</span>.b = parseInt(value.substring(pos+1));
+  }
+  <span class="reserved">else</span>
+  {
+    <span class="reserved">if</span> (value.charAt(0) == <span class="literal">'#'</span>)
+      value = value.substring(1, 7);
+    <span class="reserved">this</span>.r = hex2dec(value.substring(0, 2));
+    <span class="reserved">this</span>.g = hex2dec(value.substring(2, 4));
+    <span class="reserved">this</span>.b = hex2dec(value.substring(4, 6));
+  }
+}
+<span class="comment">/**
+ * Convert the object to a string of the form #ffffff
+ * <span class="attrib">@type</span> String
+ */</span>
+Color.<span class="reserved">prototype</span>.toString = <span class="reserved">function</span>()
+{
+  <span class="reserved">return</span> <span class="literal">'#'</span> + dec2hex(<span class="reserved">this</span>.r) + dec2hex(<span class="reserved">this</span>.g) + dec2hex(<span class="reserved">this</span>.b);
+};
+<span class="comment">/**
+ * Adjust the HSV values of the color.  Returns a reference to the
+ * object.
+ * <span class="attrib">@param</span> {float} h hue
+ * <span class="attrib">@param</span> {float} s saturation
+ * <span class="attrib">@param</span> {float} v luminance
+ * <span class="attrib">@type</span> Color
+ */</span>
+Color.<span class="reserved">prototype</span>.hsvadj = <span class="reserved">function</span>(h, s, v)
+{
+  var hsv = new ColorHSV(<span class="reserved">this</span>);
+  hsv.adj(h, s, v);
+  var c = hsv.toColor();
+  <span class="reserved">this</span>.r = c.r; <span class="reserved">this</span>.g = c.g; <span class="reserved">this</span>.b = c.b;
+  <span class="reserved">return</span> <span class="reserved">this</span>;
+};
+
+var weekdays = [<span class="literal">'Sun'</span>, <span class="literal">'Mon'</span>, <span class="literal">'Tue'</span>, <span class="literal">'Wed'</span>, <span class="literal">'Thu'</span>, <span class="literal">'Fri'</span>, <span class="literal">'Sat'</span>];
+var months = [<span class="literal">'Jan'</span>, <span class="literal">'Feb'</span>, <span class="literal">'Mar'</span>, <span class="literal">'Apr'</span>, <span class="literal">'May'</span>, <span class="literal">'Jun'</span>,
+              <span class="literal">'Jul'</span>, <span class="literal">'Aug'</span>, <span class="literal">'Sep'</span>, <span class="literal">'Oct'</span>, <span class="literal">'Nov'</span>, <span class="literal">'Dec'</span>];
+<span class="comment">/**
+ * Create a new MyDate object.
+ * <span class="attrib">@class</span> A class representing the current date and time.
+ * <span class="attrib">@param</span> {String} a string of the form "YY-MM-DD HH:mm:ss"
+ * <span class="attrib">@constructor</span>
+ */</span>
+<span class="reserved">function</span> MyDate(stddt)
+{
+  var tokens = stddt.split(<span class="literal">' '</span>);
+  var dateTokens = tokens[0].split(<span class="literal">'-'</span>);
+  var timeTokens = tokens[1].split(<span class="literal">':'</span>);
+
+  var dateobj = new Date();
+  dateobj.setYear(dateTokens[0] - 1900);
+  dateobj.setMonth(dateTokens[1] - 1);
+  dateobj.setDate(dateTokens[2]);
+  dateobj.setHours(timeTokens[0]);
+  dateobj.setMinutes(timeTokens[1]);
+  dateobj.setSeconds(timeTokens[2]);
+
+  <span class="comment">/**
+   * <span class="attrib">@type</span> Date
+   */</span>
+  <span class="reserved">this</span>.dateobj = dateobj;
+  <span class="reserved">return</span> <span class="reserved">this</span>;
+}
+<span class="comment">/**
+ * Left pad a number with zeros (up to 2 digits).  For example, 4 to "04".
+ * <span class="attrib">@type</span> String
+ */</span>
+MyDate.<span class="reserved">prototype</span>.pad = <span class="reserved">function</span>(s)
+{
+  <span class="reserved">while</span> (s.toString().length &lt; 2)
+    s = <span class="literal">'0'</span> + s;
+  <span class="reserved">return</span> s;
+};
+<span class="comment">/**
+ * A pretty (well, to me at least) string representing the date.
+ * For example, "Mon Jan 4, 13:42:12"
+ * <span class="attrib">@type</span> String
+ */</span>
+MyDate.<span class="reserved">prototype</span>.toString = <span class="reserved">function</span>()
+{
+  var d = <span class="reserved">this</span>.dateobj;
+  <span class="reserved">return</span> weekdays[d.getDay()] + <span class="literal">' '</span> + months[d.getMonth()] + <span class="literal">' '</span> + d.getDate()
+          + <span class="literal">', '</span> + <span class="reserved">this</span>.pad(d.getHours()) + <span class="literal">':'</span> + <span class="reserved">this</span>.pad(d.getMinutes())
+          + <span class="literal">':'</span> + <span class="reserved">this</span>.pad(d.getSeconds());
+};
+
+<span class="reserved">function</span> isEsc(s)
+{
+  <span class="reserved">return</span> !( (s &gt;= 48 &amp;&amp; s &lt;= 57) || (s &gt;= 65 &amp;&amp; s &lt;= 90) 
+            || (s &gt;=97 &amp;&amp; s &lt;=122) || s == 95);
+}
+<span class="comment">/**
+ * myescape and myunescape are provided for safari compatability.
+ * In reality, I should be using encodeURIComponent for everything, but
+ * since information in the db is already in this form, we'll keep it
+ * in this form.
+ */</span>
+<span class="reserved">function</span> myescape(s)
+{
+  var ret = <span class="literal">""</span>;
+  <span class="reserved">for</span> (var i = 0; i &lt; s.length; i++)
+  {
+    <span class="reserved">if</span> (isEsc(s.charCodeAt(i)))
+    {
+      var hex = dec2hex(s.charCodeAt(i)).toUpperCase();
+      <span class="reserved">if</span> (hex.length &gt; 2)
+        hex = <span class="literal">'u'</span> + hex;
+      ret += <span class="literal">'%'</span> + hex;
+    }
+    <span class="reserved">else</span>
+      ret += s[i];
+  }
+  <span class="reserved">return</span> ret;
+}
+
+<span class="comment">/**
+ * myescape and myunescape are provided for safari compatability.
+ * In reality, I should be using encodeURIComponent for everything, but
+ * since information in the db is already in this form, we'll keep it
+ * in this form.
+ */</span>
+<span class="reserved">function</span> myunescape(s)
+{
+  var ret = <span class="literal">""</span>;
+  <span class="reserved">for</span> (var i = 0; i &lt; s.length; i++)
+  {
+    <span class="reserved">if</span> (<span class="literal">'%'</span> == s[i])
+    {
+      <span class="reserved">if</span> (s.length &gt; i+5 &amp;&amp; s[i+1] == <span class="literal">'u'</span>)
+      {
+        ret += String.fromCharCode(hex2dec(s.substr(i+2, i+6)));
+        i += 5;
+      }
+      <span class="reserved">else</span> <span class="reserved">if</span> (s.length &gt; i+2)
+      {
+        ret += String.fromCharCode(hex2dec(s.substr(i+1, i+3)));
+        i += 2;
+      }
+    }
+    <span class="reserved">else</span>
+      ret += s[i];
+  }
+  <span class="reserved">return</span> ret;
+}
+
+</pre>
+<!-- END SOURCECODE -->
+<HR>
+
+
+
+
+<!-- ========== START OF NAVBAR ========== -->
+<A NAME="navbar_top"><!-- --></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3">
+  <TR ALIGN="center" VALIGN="top">
+  
+  
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-summary.html"><FONT CLASS="NavBarFont1"><b>Overview</b></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev">	&nbsp;<FONT CLASS="NavBarFont1Rev"><b>File</b></FONT>&nbsp;</TD>
+  
+
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"> <FONT CLASS="NavBarFont1">Class</FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-tree.html"><FONT CLASS="NavBarFont1"><b>Tree</b></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="index-all.html"--><FONT CLASS="NavBarFont1"><b>Index</b></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="help-doc.html"><FONT CLASS="NavBarFont1"><b>Help</b></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD BGCOLOR="#EEEEFF" ALIGN="right" VALIGN="top"><EM>
+<b>Webnote</b></EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;PREV&nbsp;
+&nbsp;NEXT</FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="index.html" TARGET="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="overview-summary.html" TARGET="_top"><B>NO FRAMES</B></A>
+&nbsp;&nbsp;
+<SCRIPT>
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="allclasses-noframe.html" TARGET=""><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+<A HREF="allclasses-noframe.html" TARGET=""><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+</TABLE>
+<!-- =========== END OF NAVBAR =========== -->
+
+<hr>
+<FONT SIZE="-1">
+
+</FONT>
+<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/">JSDoc</a> on Tue May 24 23:13:22 2005</div>
+</BODY>
+</HTML>

@@ -1,0 +1,68 @@
+There are two ways to install.  The command line way (my preferred method)
+and using the install.py server script.  If you want to install using
+install.py, edit common-default.py to have your database name, username, and
+password, rename common-default.py to common.py, upload your files, then
+browse to install.py (make sure to chmod the file first).  Just follow the
+instructions in your browser.
+
+Alternately, the command line method is described below.
+
+If you have any problems or suggestions, send an email to 
+tony at aypwip dot org.
+
+1. Dependencies
+  - python 2.3 or newer
+  - MySQL (I'm using 4.0.18, but newer version should work as well)
+  - MySQLdb-python database module (0.9.2+)
+    http://sourceforge.net/projects/mysql-python
+  - pytz python module
+    http://pytz.sourceforge.net/
+  
+2. Create the database tables
+  Run the following:
+    mysql [db name] < createTables.sql
+  This will create two tables, wn_workspaces and wn_notes.
+
+3. Set the database access information
+  In the 'etc' directory, there is a file called 'common-default.py'.
+  Rename it to common.py and then open it in a text editor.  This file
+  contains all the various options for webnote.  You must set the database
+  information (DBHOST, DBUSER, DBPASS, DBNAME) and the BASEURL of the site.
+  
+  There are a lot of other options that you may choose to set.
+  
+  If you want to log save requests to a file, make sure that apache has
+  write access to the log file.
+
+4. Place the files in an executable directory
+  Finally, to make the system run, put the files into a directory viewable
+  from the web.  Make sure that it can execute python files.  That is,
+  make sure all the python files (*.py) are executable (chmod 755 *.py)
+  and if it doesn't work, try creating or editing your .htaccess (for the
+  Apache web server) file to have:
+    AddHandler cgi-script .py
+    Options +ExecCGI +Multiviews
+  The above will only work if you're allowed to have the above Overrides in
+  .your htaccess file.  See the Apache documentation for more information.
+  
+  I also recently added a gzipped version of webnote.js and if you configure
+  apache properly, it should auto automatically send gzipped version if the
+  user's browser supports it.  To enable this feature, also add the following
+  to your .htaccess file:
+    AddEncoding x-gzip gz
+  If webnote generates javascript errors about workspace not being defined,
+  try deleting webnote.js.gz and objects.js.gs (thus forcing the unzipped
+  version to be sent).
+
+5. Admin contact information
+  If an error occurs while trying to save a workspace, a popup window
+  provides information about emailing the admin for help.  To set the
+  email address, open webnote.js and put your email address in place
+  of mine.
+
+6. Setup index.html
+  Rename index.old.html to index.html for a sample start page.  By default,
+  the load button uses ugly URLs (load.py?name=foo).  If you want clean
+  URLs, then edit index.html and uncomment the setLocation function.
+
+If it works, I would love to hear about other installations of Webnote.

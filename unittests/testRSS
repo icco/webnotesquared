@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<rss version="2.0" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"><channel><title>webnote devel</title><link>$basewebnote%252520devel</link><description>Webnote RSS feed</description><lastBuildDate>Tue, 12 Jul 2005 07:48:17 GMT</lastBuildDate><generator>PyRSS2Gen-0.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>some unicode characters</title><description>some unicode characters
+
+&#29992;&#26368;&#31616;&#21333;&#30340;&#35805;&#25551;&#36848;&#23601;&#26159;</description></item><item><title>a basic test with some html</title><description>a basic test with some html
+&lt;em&gt;foo&lt;/em&gt;
+
+&lt;strong&gt;rar&lt;/strong&gt;
+
+&lt;a href="http://www.google.com"&gt;google&lt;/a&gt;</description></item><item><title>test1</title><description>test1</description></item></channel></rss>
